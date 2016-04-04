@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Security;
+namespace Adlogix\Confluence\Client\Security;
 
 /**
  * Interface AuthenticationInterface

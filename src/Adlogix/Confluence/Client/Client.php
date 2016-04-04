@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence;
+namespace Adlogix\Confluence\Client;
 
 
 use Adlogix\Confluence\HttpClient\HttpClientInterface;

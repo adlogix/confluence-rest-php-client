@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Wrapper;
+namespace Adlogix\Confluence\Client\Wrapper;
 
 use Adlogix\Confluence\Exception\UserException;
 use GuzzleHttp\Client;

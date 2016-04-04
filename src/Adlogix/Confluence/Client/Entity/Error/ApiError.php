@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Entity\Error;
+namespace Adlogix\Confluence\Client\Entity\Error;
 
 /**
  * Class ApiError

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Exception;
+namespace Adlogix\Confluence\Client\Exception;
 
 
 use Adlogix\Confluence\Entity\Error\ApiError;

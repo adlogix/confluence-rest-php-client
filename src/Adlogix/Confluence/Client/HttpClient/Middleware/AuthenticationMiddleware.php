@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
  
-namespace Adlogix\Confluence\HttpClient\Middleware;
+namespace Adlogix\Confluence\Client\HttpClient\Middleware;
 
 
 use Adlogix\Confluence\Security\AuthenticationInterface;

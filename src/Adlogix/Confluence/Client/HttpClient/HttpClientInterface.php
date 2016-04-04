@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\HttpClient;
+namespace Adlogix\Confluence\Client\HttpClient;
 
 
 use GuzzleHttp\Psr7\Response;

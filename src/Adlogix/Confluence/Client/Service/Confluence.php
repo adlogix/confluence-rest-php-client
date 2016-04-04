@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Service;
+namespace Adlogix\Confluence\Client\Service;
 
 use Adlogix\Confluence\Wrapper\ConfluenceWrapper;
 
