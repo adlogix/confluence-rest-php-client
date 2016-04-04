@@ -1,0 +1,25 @@
+{
+  "name": "adlogix-ondemand/rest-api-php-client",
+  "license": "proprietary",
+  "description": "Confluence API PHP Client",
+  "require": {
+    "guzzlehttp/guzzle": "~6.0",
+    "jms/serializer": "~0.16.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "~0.8",
+    "phpunit/phpunit": "~4.7"
+  },
+  "authors": [
+    {
+      "name": "Cedric Michaux",
+      "email": "cedric@adlogix.eu"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Adlogix\\Confluence\\Client": "src/",
+      "Adlogix\\Tests\\Confluence\\Client": "test/"
+    }
+  }
+}
