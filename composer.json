@@ -1,8 +1,9 @@
 {
-  "name": "adlogix-ondemand/rest-api-php-client",
+  "name": "adlogix-ondemand/confluence-rest-php-client",
   "license": "proprietary",
   "description": "Confluence API PHP Client",
   "require": {
+    "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0",
     "jms/serializer": "~0.16.0"
   },
