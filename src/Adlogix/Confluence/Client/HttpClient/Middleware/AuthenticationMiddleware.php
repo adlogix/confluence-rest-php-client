@@ -12,12 +12,12 @@
 namespace Adlogix\Confluence\Client\HttpClient\Middleware;
 
 
-use Adlogix\Confluence\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\Security\AuthenticationInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
  * Class AuthenticationMiddleware
- * @package Adlogix\Confluence\HttpClient\Middleware
+ * @package Adlogix\Confluence\Client\HttpClient\Middleware
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class AuthenticationMiddleware

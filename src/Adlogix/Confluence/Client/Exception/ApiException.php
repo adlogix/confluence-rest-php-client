@@ -17,7 +17,7 @@ use Adlogix\Confluence\Entity\Error\FieldError;
 
 /**
  * Class ApiException
- * @package Adlogix\Confluence\Exception
+ * @package Adlogix\Confluence\Client\Exception
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class ApiException extends \Exception

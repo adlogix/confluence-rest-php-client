@@ -11,12 +11,9 @@
 
 namespace Adlogix\Confluence\Client\HttpClient;
 
-
-use GuzzleHttp\Psr7\Response;
-
 /**
  * Class HttpClient
- * @package Adlogix\Confluence\HttpClient
+ * @package Adlogix\Confluence\Client\HttpClient
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class HttpClient implements HttpClientInterface

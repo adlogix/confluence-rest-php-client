@@ -11,11 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Service;
 
-use Adlogix\Confluence\Wrapper\ConfluenceWrapper;
+use Adlogix\Confluence\Client\Wrapper\ConfluenceWrapper;
 
 /**
  * Class Confluence
- * @package Adlogix\Confluence\Service
+ * @package Adlogix\Confluence\Client\Service
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class Confluence

@@ -11,14 +11,13 @@
 
 namespace Adlogix\Confluence\Client\Wrapper;
 
-use Adlogix\Confluence\Exception\UserException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 
 /**
  * Class ConfluenceWrapper
- * @package Adlogix\Confluence\Wrapper
+ * @package Adlogix\Confluence\Client\Wrapper
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class ConfluenceWrapper
@@ -94,7 +93,8 @@ class ConfluenceWrapper
         $httpMethod = 'GET',
         array $headers = [],
         $body = null
-    ) {
+    )
+    {
         $request = new Request($httpMethod, $requestUri, $headers, $body);
         return $this->client->send($request);
     }

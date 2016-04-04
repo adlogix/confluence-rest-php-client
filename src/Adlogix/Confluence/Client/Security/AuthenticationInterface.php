@@ -13,7 +13,7 @@ namespace Adlogix\Confluence\Client\Security;
 
 /**
  * Interface AuthenticationInterface
- * @package Adlogix\Confluence\Security
+ * @package Adlogix\Confluence\Client\Security
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 interface AuthenticationInterface

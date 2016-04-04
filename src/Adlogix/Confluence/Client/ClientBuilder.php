@@ -11,14 +11,15 @@
 
 namespace Adlogix\Confluence\Client;
 
-
-use Adlogix\Confluence\HttpClient\Middleware\AuthenticationMiddleware;
-use Adlogix\Confluence\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\HttpClient\Middleware\AuthenticationMiddleware;
+use Adlogix\Confluence\Client\Security\AuthenticationInterface;
 use GuzzleHttp\HandlerStack;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 
 /**
  * Class ClientBuilder
- * @package Adlogix\Confluence
+ * @package Adlogix\Confluence\Client
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class ClientBuilder
@@ -35,7 +36,7 @@ class ClientBuilder
     private $authentication;
 
     /**
-     * @var
+     * @var SerializerInterface
      */
     private $serializer;
 
@@ -59,7 +60,7 @@ class ClientBuilder
     public function __construct($baseUri, AuthenticationInterface $authentication)
     {
         $this->authentication = $authentication;
-        
+
         if (empty($baseUri)) {
             throw new \InvalidArgumentException("The baseUri cannot be empty");
         }
@@ -68,18 +69,15 @@ class ClientBuilder
 
     public function build()
     {
-
         $this->serializer = $this->serializer ?: $this->buildDefaultSerializer();
-
         $stack = HandlerStack::create();
-
         $stack->push(new AuthenticationMiddleware($this->authentication));
-
-
     }
 
-
-    public function setSerializer($serializer)
+    /**
+     * @param SerializerInterface $serializer
+     */
+    public function setSerializer(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
     }
@@ -97,6 +95,16 @@ class ClientBuilder
 
     private function buildDefaultSerializer()
     {
+        return SerializerBuilder::create()
+            ->addMetadataDir(__DIR__ . '/Resources/serializer', 'Adlogix\Confluence\Client')
+            ->addDefaultHandlers();
 
+        /*
+        ->configureHandlers(
+            function (HandlerRegistry $registry){
+                $registry->registerSubscribingHandler(new LinkColl)
+            }
+        )
+        */
     }
 }

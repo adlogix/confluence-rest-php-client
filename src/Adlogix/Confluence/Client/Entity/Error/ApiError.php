@@ -13,7 +13,7 @@ namespace Adlogix\Confluence\Client\Entity\Error;
 
 /**
  * Class ApiError
- * @package Adlogix\Confluence\Entity\Error
+ * @package Adlogix\Confluence\Client\Entity\Error
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class ApiError

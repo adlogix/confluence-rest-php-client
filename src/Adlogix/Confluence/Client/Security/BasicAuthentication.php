@@ -13,7 +13,7 @@ namespace Adlogix\Confluence\Client\Security;
 
 /**
  * Class BasicAuthentication
- * @package Adlogix\Confluence\Security
+ * @package Adlogix\Confluence\Client\Security
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 class BasicAuthentication implements AuthenticationInterface

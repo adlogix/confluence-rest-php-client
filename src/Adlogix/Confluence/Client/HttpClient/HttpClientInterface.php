@@ -16,7 +16,7 @@ use GuzzleHttp\Psr7\Response;
 
 /**
  * Interface HttpClientInterface
- * @package Adlogix\Confluence\HttpClient
+ * @package Adlogix\Confluence\Client\HttpClient
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
 interface HttpClientInterface
