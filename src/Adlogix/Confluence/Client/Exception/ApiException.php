@@ -12,8 +12,7 @@
 namespace Adlogix\Confluence\Client\Exception;
 
 
-use Adlogix\Confluence\Entity\Error\ApiError;
-use Adlogix\Confluence\Entity\Error\FieldError;
+use Adlogix\Confluence\Client\Entity\Error\ApiError;
 
 /**
  * Class ApiException
@@ -40,13 +39,5 @@ class ApiException extends \Exception
     public function getApiError()
     {
         return $this->apiError;
-    }
-
-    /**
-     * @return FieldError[]
-     */
-    public function getFieldErrors()
-    {
-        return $this->apiError->getFieldErrors();
     }
 }

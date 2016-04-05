@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 namespace Adlogix\Confluence\Client\HttpClient\Middleware;
 
 
@@ -18,7 +18,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Class AuthenticationMiddleware
  * @package Adlogix\Confluence\Client\HttpClient\Middleware
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class AuthenticationMiddleware
 {
@@ -29,6 +29,7 @@ class AuthenticationMiddleware
 
     /**
      * AuthenticationMiddleware constructor.
+     *
      * @param AuthenticationInterface $authentication
      */
     public function __construct(AuthenticationInterface $authentication)
@@ -38,6 +39,7 @@ class AuthenticationMiddleware
 
     /**
      * @param callable $handler
+     *
      * @return callable
      */
     public function __invoke(callable $handler)
@@ -47,7 +49,7 @@ class AuthenticationMiddleware
             foreach ($this->authentication->getHeaders() as $key => $value) {
                 $request = $request->withHeader($key, $value);
             }
-
+            
             return $handler($request, $options);
         };
     }

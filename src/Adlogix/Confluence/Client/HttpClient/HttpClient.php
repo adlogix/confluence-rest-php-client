@@ -11,52 +11,41 @@
 
 namespace Adlogix\Confluence\Client\HttpClient;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+
 /**
  * Class HttpClient
  * @package Adlogix\Confluence\Client\HttpClient
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class HttpClient implements HttpClientInterface
 {
+
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * HttpClient constructor.
+     *
+     * @param array                $options
+     * @param ClientInterface|null $client
+     */
+    public function __construct(
+        array $options = [],
+        ClientInterface $client = null
+    ) {
+        $this->client = $client ?: new Client($options);
+    }
 
     /**
      * {@inheritdoc}
      */
     public function get($uri, array $options = [])
     {
-        // TODO: Implement get() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function post($uri, $json, array $options = [])
-    {
-        // TODO: Implement post() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function put($uri, $json, array $options = [])
-    {
-        // TODO: Implement put() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function patch($uri, $json, array $options = [])
-    {
-        // TODO: Implement patch() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete($uri, array $options = [])
-    {
-        // TODO: Implement delete() method.
+        return $this->request('GET', $uri, null, $options);
     }
 
     /**
@@ -64,6 +53,11 @@ class HttpClient implements HttpClientInterface
      */
     public function request($method, $uri, $json = null, array $options = [])
     {
-        // TODO: Implement request() method.
+        if(!empty($json)){
+            $options['body'] = $json;
+            $options['headers']['content-type'] = 'application/json';
+        }
+
+        return $this->client->request($method, $uri, $options);
     }
 }

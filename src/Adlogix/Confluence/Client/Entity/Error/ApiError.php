@@ -14,7 +14,7 @@ namespace Adlogix\Confluence\Client\Entity\Error;
 /**
  * Class ApiError
  * @package Adlogix\Confluence\Client\Entity\Error
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class ApiError
 {
@@ -30,21 +30,15 @@ class ApiError
     private $message;
 
     /**
-     * @var FieldError[]
-     */
-    private $fieldErrors;
-
-    /**
      * ApiError constructor.
-     * @param int $code
-     * @param string $message
-     * @param FieldError[] $fieldErrors
+     *
+     * @param int          $code
+     * @param string       $message
      */
     public function __construct($code, $message, array $fieldErrors = [])
     {
         $this->code = (int)$code;
         $this->message = (string)$message;
-        $this->fieldErrors = $fieldErrors;
     }
 
     /**
@@ -62,14 +56,4 @@ class ApiError
     {
         return $this->message;
     }
-
-    /**
-     * @return FieldError[]
-     */
-    public function getFieldErrors()
-    {
-        return $this->fieldErrors;
-    }
-
-
 }

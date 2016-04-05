@@ -1,0 +1,6 @@
+confluence:
+    build: docker/atlassian-sdk
+    expose:
+        - 1990
+    environment:
+        VIRTUAL_HOST: confluence.dev

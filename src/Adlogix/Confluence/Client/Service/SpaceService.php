@@ -9,24 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Security;
+namespace Adlogix\Confluence\Client\Service;
 
 /**
- * Interface AuthenticationInterface
- * @package Adlogix\Confluence\Client\Security
+ * Class SpaceService
+ * @package Adlogix\Confluence\Client\Service
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
-interface AuthenticationInterface
+class SpaceService extends AbstractService
 {
 
-    /**
-     * @return array
-     */
-    public function getHeaders();
+    public function all(array $options = [])
+    {
+        $all = $this->get('space');
 
-
-    /**
-     * @return array
-     */
-    public function getQueryParameters();
+        return $all;
+    }
 }

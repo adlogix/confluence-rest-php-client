@@ -53,4 +53,12 @@ class BasicAuthentication implements AuthenticationInterface
     {
         return $this->headers;
     }
+
+    /**
+     * @return array
+     */
+    public function getQueryParameters()
+    {
+        return ['os_authType' => 'basic'];
+    }
 }

@@ -32,37 +32,6 @@ interface HttpClientInterface
     public function get($uri, array $options = []);
 
     /**
-     * @param string $uri
-     * @param string $json
-     * @param array $options
-     * @return Response
-     */
-    public function post($uri, $json, array $options = []);
-
-    /**
-     * @param string $uri
-     * @param string $json
-     * @param array $options
-     * @return Response
-     */
-    public function put($uri, $json, array $options = []);
-
-    /**
-     * @param string $uri
-     * @param string $json
-     * @param array $options
-     * @return Response
-     */
-    public function patch($uri, $json, array $options = []);
-
-    /**
-     * @param string $uri
-     * @param array $options
-     * @return Response
-     */
-    public function delete($uri, array $options = []);
-
-    /**
      * @param string $method
      * @param string $uri
      * @param string|null $json

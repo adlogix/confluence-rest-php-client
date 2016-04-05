@@ -11,6 +11,7 @@
 
 namespace Adlogix\Confluence\Client;
 
+use Adlogix\Confluence\Client\HttpClient\HttpClient;
 use Adlogix\Confluence\Client\HttpClient\Middleware\AuthenticationMiddleware;
 use Adlogix\Confluence\Client\Security\AuthenticationInterface;
 use GuzzleHttp\HandlerStack;
@@ -20,7 +21,7 @@ use JMS\Serializer\SerializerInterface;
 /**
  * Class ClientBuilder
  * @package Adlogix\Confluence\Client
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class ClientBuilder
 {
@@ -47,8 +48,9 @@ class ClientBuilder
 
 
     /**
-     * @param string $baseUri
+     * @param string                  $baseUri
      * @param AuthenticationInterface $authentication
+     *
      * @return ClientBuilder
      */
     public static function create($baseUri, AuthenticationInterface $authentication)
@@ -56,7 +58,12 @@ class ClientBuilder
         return new static($baseUri, $authentication);
     }
 
-
+    /**
+     * ClientBuilder constructor.
+     *
+     * @param                         $baseUri
+     * @param AuthenticationInterface $authentication
+     */
     public function __construct($baseUri, AuthenticationInterface $authentication)
     {
         $this->authentication = $authentication;
@@ -72,6 +79,16 @@ class ClientBuilder
         $this->serializer = $this->serializer ?: $this->buildDefaultSerializer();
         $stack = HandlerStack::create();
         $stack->push(new AuthenticationMiddleware($this->authentication));
+
+
+        return new Client(
+            new HttpClient([
+                'base_uri' => $this->baseUri,
+                'handler' => $stack,
+                'debug' => $this->debug
+            ]),
+            $this->serializer
+        );
     }
 
     /**
@@ -85,6 +102,7 @@ class ClientBuilder
 
     /**
      * @param boolean $debug
+     *
      * @return $this
      */
     public function setDebug($debug)
@@ -97,14 +115,7 @@ class ClientBuilder
     {
         return SerializerBuilder::create()
             ->addMetadataDir(__DIR__ . '/Resources/serializer', 'Adlogix\Confluence\Client')
-            ->addDefaultHandlers();
-
-        /*
-        ->configureHandlers(
-            function (HandlerRegistry $registry){
-                $registry->registerSubscribingHandler(new LinkColl)
-            }
-        )
-        */
+            ->addDefaultHandlers()
+            ->build();
     }
 }

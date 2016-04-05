@@ -9,24 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Security;
+namespace Adlogix\Confluence\Client\Service;
 
 /**
- * Interface AuthenticationInterface
- * @package Adlogix\Confluence\Client\Security
+ * Class PageService
+ * @package Adlogix\Confluence\Client\Service
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
-interface AuthenticationInterface
+class PageService extends AbstractService
 {
 
-    /**
-     * @return array
-     */
-    public function getHeaders();
-
-
-    /**
-     * @return array
-     */
-    public function getQueryParameters();
 }
