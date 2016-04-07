@@ -16,7 +16,7 @@ namespace Adlogix\Confluence\Client\Service;
  * @package Adlogix\Confluence\Client\Service
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
-class PageService extends AbstractService
+class PageService extends AbstractApiService
 {
 
 }

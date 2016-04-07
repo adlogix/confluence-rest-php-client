@@ -28,13 +28,20 @@ class AuthenticationMiddleware
     private $authentication;
 
     /**
+     * @var string
+     */
+    private $appUrl;
+
+    /**
      * AuthenticationMiddleware constructor.
      *
      * @param AuthenticationInterface $authentication
+     * @param string                  $appUrl
      */
-    public function __construct(AuthenticationInterface $authentication)
+    public function __construct(AuthenticationInterface $authentication, $appUrl)
     {
         $this->authentication = $authentication;
+        $this->appUrl = $appUrl;
     }
 
     /**
@@ -45,11 +52,35 @@ class AuthenticationMiddleware
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
+            echo (string)$request->getUri();
+
+            $this->authentication->getToken()
+                ->setAppUrl($this->appUrl)
+                ->setQueryString($request->getMethod(), $request->getUri());
 
             foreach ($this->authentication->getHeaders() as $key => $value) {
                 $request = $request->withHeader($key, $value);
             }
-            
+
+
+            $uri = $request->getUri();
+            $query = $uri->getQuery();
+            if(empty($query)){
+                $query = "?";
+            }
+            else{
+                $query = $query."&";
+            }
+
+            $queryParams = [];
+            foreach( $this->authentication->getQueryParameters() as $key => $value){
+                $queryParams[] = $key.'='.$value;
+            }
+            $query = $query . implode('&', $queryParams);
+            $uri = $uri->withQuery($query);
+            $request = $request->withUri($uri);
+
+
             return $handler($request, $options);
         };
     }

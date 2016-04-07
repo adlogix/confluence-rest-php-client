@@ -11,6 +11,8 @@
 
 namespace Adlogix\Confluence\Client\Security;
 
+use JMS\Serializer\SerializerInterface;
+
 /**
  * Class BasicAuthentication
  * @package Adlogix\Confluence\Client\Security
@@ -43,11 +45,10 @@ class BasicAuthentication implements AuthenticationInterface
         $this->headers = [
             'Authorization' => sprintf('Basic %s', base64_encode($username . ':' . $password))
         ];
-
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getHeaders()
     {
@@ -55,10 +56,11 @@ class BasicAuthentication implements AuthenticationInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getQueryParameters()
     {
         return ['os_authType' => 'basic'];
     }
+
 }

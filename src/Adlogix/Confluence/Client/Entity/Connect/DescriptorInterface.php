@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Service;
+namespace Adlogix\Confluence\Client\Entity\Connect;
 
 /**
- * Interface ServiceInterface
- * @package Adlogix\Confluence\Client\Service
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * Interface DescriptorInterface
+ * @package Adlogix\Confluence\Client\Entity\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-interface ServiceInterface
+interface DescriptorInterface
 {
-    
 
 }

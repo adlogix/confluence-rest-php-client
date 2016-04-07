@@ -74,20 +74,24 @@ class ClientBuilder
         $this->baseUri = $baseUri;
     }
 
+    /**
+     * @return Client
+     */
     public function build()
     {
         $this->serializer = $this->serializer ?: $this->buildDefaultSerializer();
         $stack = HandlerStack::create();
-        $stack->push(new AuthenticationMiddleware($this->authentication));
-
+        $stack->push(new AuthenticationMiddleware($this->authentication, $this->baseUri));
+        
 
         return new Client(
             new HttpClient([
-                'base_uri' => $this->baseUri,
+                'base_uri' => $this->baseUri."/rest/api/",
                 'handler' => $stack,
                 'debug' => $this->debug
             ]),
-            $this->serializer
+            $this->serializer,
+            $this->authentication
         );
     }
 

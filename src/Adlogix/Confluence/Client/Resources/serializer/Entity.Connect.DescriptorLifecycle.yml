@@ -1,0 +1,10 @@
+Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle:
+  properties:
+    installed:
+      type: string
+    uninstalled:
+      type: string
+    enabled:
+      type: string
+    disabled:
+      type: string

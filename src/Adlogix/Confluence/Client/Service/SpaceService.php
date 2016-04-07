@@ -16,7 +16,7 @@ namespace Adlogix\Confluence\Client\Service;
  * @package Adlogix\Confluence\Client\Service
  * @author Cedric Michaux <cedric@adlogix.eu>
  */
-class SpaceService extends AbstractService
+class SpaceService extends AbstractApiService
 {
 
     public function all(array $options = [])
@@ -24,5 +24,12 @@ class SpaceService extends AbstractService
         $all = $this->get('space');
 
         return $all;
+    }
+
+    public function byKey($key, array $options = [])
+    {
+        $space = $this->get(sprintf('space/%s', $key));
+
+        return $space;
     }
 }

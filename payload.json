@@ -1,0 +1,12 @@
+{
+  "key": "eu.adlogix.adsdaq.doc",
+  "clientKey": "Confluence:5306995737",
+  "publicKey": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCe2OyhgSQnX5SWa3NKLFwtT1HohlKnWaWX68+4YP++IHzcTppmqRsDTNZI+9PcZTnFyh5aTLU+vONFAgNEpMiFYrseA62P7O77u5nTX0V5U/9FqxorrP2PBV7QJtzFpyQaFnjXyDU839xgRDdDaF/4/lADgjNKrMFBqGsg+qMGjQIDAQAB",
+  "sharedSecret": "fa5ef399-1173-4b36-881c-f3e9bea1ced0",
+  "serverVersion": "6214",
+  "pluginsVersion": "1.1.84",
+  "baseUrl": "http://confluence.dev/confluence",
+  "productType": "confluence",
+  "description": "Atlassian Confluence at http://confluence.dev/confluence ",
+  "eventType": "installed"
+}

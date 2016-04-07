@@ -11,15 +11,22 @@
 
 namespace Adlogix\Confluence\Client\Security;
 
-use JMS\Serializer\SerializerInterface;
+use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
+use Adlogix\Confluence\Client\Entity\Connect\TokenInterface;
 
 /**
  * Interface AuthenticationInterface
- * @package Adlogix\Confluence\Client\Security
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @package Adlogix\Confluence\Client\Security\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-interface AuthenticationInterface
+interface ConnectAuthenticationInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getType();
+
 
     /**
      * @return array
@@ -32,10 +39,8 @@ interface AuthenticationInterface
      */
     public function getQueryParameters();
 
-
     /**
-     * @return mixed
+     * @return TokenInterface
      */
     public function getToken();
-
 }

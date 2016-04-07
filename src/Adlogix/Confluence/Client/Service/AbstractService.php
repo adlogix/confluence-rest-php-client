@@ -14,20 +14,17 @@ namespace Adlogix\Confluence\Client\Service;
 use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 
 /**
  * Class AbstractService
  * @package Adlogix\Confluence\Client\Service
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class AbstractService implements ServiceInterface
 {
-    /**
-     * @var HttpClientInterface
-     */
-    protected $httpClient;
-
     /**
      * @var SerializerInterface
      */
@@ -35,27 +32,36 @@ class AbstractService implements ServiceInterface
 
     /**
      * AbstractService constructor.
-     * @param HttpClientInterface $httpClient
+     *
      * @param SerializerInterface $serializer
      */
-    public function __construct(HttpClientInterface $httpClient, SerializerInterface $serializer)
+    public function __construct(SerializerInterface $serializer)
     {
-        $this->httpClient = $httpClient;
         $this->serializer = $serializer;
     }
 
-    protected function get($uri, array $options = [])
-    {
-        try {
-            $response = $this->httpClient
-                ->get($uri, $options);
 
-            return $response->getBody()
-                ->getContents();
-            
-        } catch (RequestException $exception) {
-            throw ExceptionWrapper::wrap($exception, $this->serializer);
-        }
+    /**
+     * @param mixed                $entity
+     * @param SerializationContext $context
+     *
+     * @return string
+     */
+    protected function serialize($entity, SerializationContext $context = null)
+    {
+        return $this->serializer->serialize($entity, 'json', $context);
+    }
+
+    /**
+     * @param string                 $json
+     * @param string                 $type
+     * @param DeserializationContext $context
+     *
+     * @return mixed
+     */
+    protected function deserialize($json, $type, DeserializationContext $context = null)
+    {
+        return $this->serializer->deserialize($json, $type, 'json', $context);
     }
 
 }

@@ -5,7 +5,8 @@
   "require": {
     "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0",
-    "jms/serializer": "~0.16.0"
+    "jms/serializer": "~0.16.0",
+    "firebase/php-jwt": "^3.0"
   },
   "require-dev": {
     "mockery/mockery": "~0.8",
@@ -19,7 +20,11 @@
   ],
   "autoload": {
     "psr-0": {
-      "Adlogix\\Confluence\\Client": "src/",
+      "Adlogix\\Confluence\\Client": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
       "Adlogix\\Tests\\Confluence\\Client": "test/"
     }
   }

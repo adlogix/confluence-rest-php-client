@@ -1,0 +1,17 @@
+Adlogix\Confluence\Client\Entity\Connect\Descriptor:
+  properties:
+    baseUrl:
+      serialized_name: baseUrl
+      type: string
+    key:
+      type: string
+    description:
+      type: string
+    name:
+      type: string
+    lifecycle:
+      type: Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle
+    vendor:
+      type: Adlogix\Confluence\Client\Entity\Connect\DescriptorVendor
+    scopes:
+      type: array

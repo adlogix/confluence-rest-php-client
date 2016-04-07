@@ -1,0 +1,6 @@
+Adlogix\Confluence\Client\Entity\Connect\DescriptorVendor:
+  properties:
+    name:
+      type: string
+    url:
+      type: string
