@@ -11,6 +11,9 @@
 
 namespace Adlogix\Confluence\Client\Service;
 
+use Adlogix\Confluence\Client\Entity\Collection\SpaceCollection;
+use Adlogix\Confluence\Client\Entity\Space;
+
 /**
  * Class SpaceService
  * @package Adlogix\Confluence\Client\Service
@@ -19,17 +22,34 @@ namespace Adlogix\Confluence\Client\Service;
 class SpaceService extends AbstractApiService
 {
 
+    /**
+     * @param array $options
+     *
+     * @return SpaceCollection
+     */
     public function all(array $options = [])
     {
-        $all = $this->get('space');
+        $all = $this->get('space', $options);
 
-        return $all;
+        return $this->deserialize(
+            $all,
+            'Adlogix\Confluence\Client\Entity\Collection\SpaceCollection'
+        );
     }
 
+    /**
+     * @param string      $key
+     * @param array $options
+     *
+     * @return Space
+     */
     public function byKey($key, array $options = [])
     {
-        $space = $this->get(sprintf('space/%s', $key));
+        $space = $this->get(sprintf('space/%s', $key), $options);
 
-        return $space;
+        return $this->deserialize(
+            $space,
+            'Adlogix\Confluence\Client\Entity\Space'
+        );
     }
 }

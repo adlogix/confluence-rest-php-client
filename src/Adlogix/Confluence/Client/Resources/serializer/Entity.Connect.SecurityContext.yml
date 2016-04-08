@@ -1,4 +1,5 @@
 Adlogix\Confluence\Client\Entity\Connect\SecurityContext:
+  exclusion_policy: ALL
   properties:
     key:
       type: string

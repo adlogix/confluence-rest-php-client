@@ -1,4 +1,5 @@
 Adlogix\Confluence\Client\Entity\Connect\Descriptor:
+  exclusion_policy: ALL
   properties:
     baseUrl:
       serialized_name: baseUrl

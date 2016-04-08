@@ -1,4 +1,5 @@
 Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle:
+  exclusion_policy: ALL
   properties:
     installed:
       type: string

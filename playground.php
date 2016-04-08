@@ -3,6 +3,7 @@
 
 use Adlogix\Confluence\Client\ClientBuilder;
 use Adlogix\Confluence\Client\Security\ConnectJwtAuthentication;
+use GuzzleHttp\Exception\ClientException;
 use JMS\Serializer\SerializerBuilder;
 
 require_once 'vendor/autoload.php';
@@ -56,16 +57,14 @@ $client = ClientBuilder::create(
 $authentication = $client->authentication();
 $token = $authentication->getToken();
 try {
-    //$response = $spaces->all();
-    //var_dump($authentication);
-    var_dump($token);
 
-
-    var_dump($token->sign(false));
     var_dump($client->spaces()->all());
 
-    var_dump($client->spaces()->byKey('ds'));
+//    $response = $client->sendRawRequest("GET", "space/ds");
+//    var_dump($response->getBody()->getContents());
 
 } catch (ApiException $ex) {
     var_dump($ex->getApiError());
+} catch(ClientException $ex){
+    echo $ex->getMessage();
 }
