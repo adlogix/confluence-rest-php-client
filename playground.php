@@ -1,44 +1,30 @@
 <?php
+require_once 'vendor/autoload.php';
 
 
 use Adlogix\Confluence\Client\ClientBuilder;
 use Adlogix\Confluence\Client\Security\Authentication\JwtHeaderAuthentication;
-use GuzzleHttp\Exception\ClientException;
-use JMS\Serializer\SerializerBuilder;
-
-require_once 'vendor/autoload.php';
-
-$descriptor = json_encode(
-    [
-        "key" => "eu.adlogix.adsdaq.doc",
-        "name" => "Adsdaq Doc",
-        "description" => "Show confluence doc into Adsdaq",
-        "baseUrl" => "http://doc.adsdaq.dev/",
-        "vendor" => [
-            "name" => "Adlogix",
-            "url" => "https://www.adlogix.eu"
-        ],
-        "version" => "0.1",
-        "scopes" => [
-            "read"
-        ],
-        "lifecycle" => [
-            "installed" => '/installed',
-            "enabled" => '/enabled'
-        ]
-]);
 
 
-$serializer = SerializerBuilder::create()
-    ->addMetadataDir(__DIR__ . '/src/Adlogix/Confluence/Client/Resources/serializer', 'Adlogix\Confluence\Client')
-    ->addDefaultHandlers()
-    ->build();
 
+$lifecycle = new \Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle();
+$lifecycle->setInstalled('/playground.php?action=installed')
+    ->setEnabled('/playground.php?action=enabled');
 
-$payload = file_get_contents('payload.json');
-$securityContext = $serializer->deserialize($payload, 'Adlogix\Confluence\Client\Entity\Connect\SecurityContext', 'json');
-$descriptor = $serializer->deserialize($descriptor, 'Adlogix\Confluence\Client\Entity\Connect\Descriptor', 'json');
+$descriptor = new \Adlogix\Confluence\Client\Entity\Connect\Descriptor("http://myconnectplugin.dev/",
+    'dev.mypluginkey');
 
+$descriptor->setLifecycle($lifecycle)
+    ->setScopes([
+        'read'
+    ]);
+
+$securityContext = new \Adlogix\Confluence\Client\Entity\Connect\SecurityContext();
+
+if (file_exists('payload.json')) {
+    $payload = json_decode(file_get_contents('payload.json'));
+    $securityContext->setSharedSecret($payload->sharedSecret);
+}
 
 $client = ClientBuilder::create(
     'http://confluence.dev/confluence',
@@ -50,17 +36,31 @@ $client = ClientBuilder::create(
     ->setDebug(true)
     ->build();
 
-$authentication = $client->authentication();
-$token = $authentication->getToken();
-try {
 
-    var_dump($client->spaces()->all());
+$action = (@$_GET['action']) ?: "";
+switch ($action) {
+    case 'descriptor':
+        echo $client->descriptor()->get();
+        break;
 
-//    $response = $client->sendRawRequest("GET", "space/ds");
-//    var_dump($response->getBody()->getContents());
+    case 'installed':
+        file_put_contents('payload.json', file_get_contents('php://input'));
+        http_response_code(200);
+        echo 'OK';
+        break;
 
-} catch (ApiException $ex) {
-    var_dump($ex->getApiError());
-} catch(ClientException $ex){
-    echo $ex->getMessage();
+    case 'enabled':
+        http_response_code(200);
+        echo 'OK';
+        break;
+
+    default:
+        try {
+            var_dump($client->spaces()->all());
+        } catch (ApiException $ex) {
+            var_dump($ex->getApiError());
+        }
+
+        break;
 }
+

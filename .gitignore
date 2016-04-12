@@ -2,3 +2,5 @@ vendor
 .idea
 test-output/*
 *.local.*
+payload.json
+atlassian

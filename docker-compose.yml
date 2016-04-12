@@ -16,8 +16,7 @@ confluence:
 application:
     image: debian:jessie
     volumes:
-        - .:/var/www/adqDoc
-        - ./../confluence-rest-php-client:/var/www/confluence-rest-php-client
+        - .:/var/www/atlconnect
 
 nginx:
     image: he8us/nginx
@@ -26,9 +25,9 @@ nginx:
 
     dns: 192.168.99.1
     environment:
-        VIRTUAL_HOST: doc.adsdaq.dev
-        DOCUMENT_ROOT: /var/www/adqDoc/web
-        LOG_FILE: adqdoc
+        VIRTUAL_HOST: atlassianconnect.dev
+        DOCUMENT_ROOT: /var/www/atlconnect
+        LOG_FILE: atlconnect
 
     links:
         - php
@@ -46,11 +45,8 @@ php:
         - confluence
 
     dns: 192.168.99.1
-
     environment:
         APPLICATION_ENV: dev
         TIMEZONE: "Europe/Brussels"
-
-
     volumes_from:
         - application
