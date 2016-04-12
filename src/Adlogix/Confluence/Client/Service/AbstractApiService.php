@@ -12,7 +12,9 @@
 namespace Adlogix\Confluence\Client\Service;
 
 
+use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use JMS\Serializer\SerializerInterface;
 
 class AbstractApiService extends AbstractService
@@ -44,6 +46,8 @@ class AbstractApiService extends AbstractService
                 ->getContents();
 
         } catch (RequestException $exception) {
+            throw ExceptionWrapper::wrap($exception, $this->serializer);
+        }catch (ClientException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }
     }

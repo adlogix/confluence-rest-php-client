@@ -17,6 +17,7 @@ use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
 use Adlogix\Confluence\Client\Tests\TestCase;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -34,11 +35,17 @@ class ExceptionWrapperTest extends TestCase
      */
     public function wrap_401AndNoCredentialsGiven_ReturnsApiException()
     {
+        $uri = new Uri('/some/path');
+
         $request = $this->getMock(RequestInterface::class);
         $request->expects($this->atLeastOnce())
             ->method('hasHeader')
             ->with($this->logicalOr('Authentication', 'Authorization'))
             ->willReturn(false);
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn($uri);
 
 
         $response = $this->getMock(ResponseInterface::class);
@@ -62,13 +69,20 @@ class ExceptionWrapperTest extends TestCase
      * @param string $exceptionMessage
      *
      */
-    public function wrap_401AndCredentialsGiven_ReturnApiException($headerValue, $exceptionMessage)
+    public function wrap_401AndHeaderCredentialsGiven_ReturnApiException($headerValue, $exceptionMessage)
     {
+
+        $uri = new Uri('/some/path');
         $request = $this->getMock(RequestInterface::class);
+
         $request->expects($this->atLeastOnce())
             ->method('hasHeader')
             ->with($this->logicalOr('Authentication', 'Authorization'))
             ->willReturn(true);
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn($uri);
 
         $response = $this->getMock(ResponseInterface::class);
         $response->expects($this->once())
@@ -89,6 +103,45 @@ class ExceptionWrapperTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @dataProvider loginReasons_dataprovider
+     *
+     * @param string $headerValue
+     * @param string $exceptionMessage
+     */
+    public function wrap_401AndQueryParamCredentialGiven_ReturnApiException($headerValue, $exceptionMessage)
+    {
+
+        $uri = new Uri('/some/path?jwt=jwttoken');
+        
+        $request = $this->getMock(RequestInterface::class);
+        $request->expects($this->atLeastOnce())
+            ->method('hasHeader')
+            ->with($this->logicalOr('Authentication', 'Authorization'))
+            ->willReturn(false);
+
+        $request->expects($this->once())
+            ->method('getUri')
+            ->willReturn($uri);
+
+        $response = $this->getMock(ResponseInterface::class);
+        $response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(401);
+
+        $response->expects($this->once())
+            ->method('getHeader')
+            ->with('X-Seraph-LoginReason')
+            ->willReturn($headerValue);
+
+        $requestException = new RequestException('Error 401', $request, $response);
+
+        $this->assertEquals(
+            new ApiException(new ApiError(401, $exceptionMessage)),
+            ExceptionWrapper::wrap($requestException, $this->getSerializer())
+        );
+    }
 
     public function loginReasons_dataprovider()
     {
@@ -101,7 +154,6 @@ class ExceptionWrapperTest extends TestCase
             ['', 'Invalid Credentials']
         ];
     }
-
 
 
     /**

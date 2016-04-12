@@ -193,11 +193,11 @@ class Descriptor implements DescriptorInterface
     }
 
     /**
-     * @param array $lifecycle
+     * @param DescriptorLifecycle $lifecycle
      *
      * @return Descriptor
      */
-    public function setLifecycle($lifecycle)
+    public function setLifecycle(DescriptorLifecycle $lifecycle)
     {
         $this->lifecycle = $lifecycle;
         return $this;

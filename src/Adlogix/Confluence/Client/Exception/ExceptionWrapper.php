@@ -72,11 +72,17 @@ class ExceptionWrapper
         $request = $exception->getRequest();
         $response = $exception->getResponse();
 
+        $uri = $request->getUri();
+        $queryParams = \GuzzleHttp\Psr7\parse_query($uri->getQuery());
 
-        if (!$request->hasHeader('Authorization') && !$request->hasHeader('Authentication')) {
+        if (
+            !$request->hasHeader('Authorization')
+            && !$request->hasHeader('Authentication')
+            && !array_key_exists('jwt', $queryParams)
+            && empty($queryParams['jwt'])
+        ) {
             return new ApiError($exception->getCode(), 'Authentication Required');
         }
-
 
         switch ($response->getHeader('X-Seraph-LoginReason')) {
             case 'AUTHENTICATED_FAILED':
