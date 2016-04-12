@@ -71,11 +71,7 @@ class Descriptor implements DescriptorInterface
     private $scopes;
 
     /**
-     * Descriptor constructor.
-     *
-     * @param string $baseUrl
-     * @param string $key
-     *
+     * {@inheritdoc}
      */
     public function __construct($baseUrl, $key)
     {
@@ -104,9 +100,7 @@ class Descriptor implements DescriptorInterface
     }
 
     /**
-     * @param string $authentication
-     *
-     * @return Descriptor
+     * {@inheritdoc}
      */
     public function setAuthentication($authentication)
     {
@@ -134,7 +128,7 @@ class Descriptor implements DescriptorInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getKey()
     {

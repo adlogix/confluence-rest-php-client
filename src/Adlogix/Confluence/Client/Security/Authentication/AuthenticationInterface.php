@@ -9,18 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Security;
+namespace Adlogix\Confluence\Client\Security\Authentication;
 
-use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
+
+use Adlogix\Confluence\Client\Entity\Connect\DescriptorInterface;
+use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
 use Adlogix\Confluence\Client\Entity\Connect\TokenInterface;
+use JMS\Serializer\SerializerInterface;
 
 /**
  * Interface AuthenticationInterface
  * @package Adlogix\Confluence\Client\Security\Connect
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-interface ConnectAuthenticationInterface
+interface AuthenticationInterface
 {
+
+    /**
+     * AuthenticationInterface constructor.
+     *
+     * @param SecurityContext          $securityContext
+     * @param DescriptorInterface               $descriptor
+     * @param SerializerInterface|null $serializer
+     */
+    public function __construct(
+        SecurityContext $securityContext,
+        DescriptorInterface $descriptor,
+        SerializerInterface $serializer = null
+    );
 
     /**
      * @return string

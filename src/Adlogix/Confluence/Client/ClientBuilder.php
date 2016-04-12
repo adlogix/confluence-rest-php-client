@@ -13,7 +13,7 @@ namespace Adlogix\Confluence\Client;
 
 use Adlogix\Confluence\Client\HttpClient\HttpClient;
 use Adlogix\Confluence\Client\HttpClient\Middleware\AuthenticationMiddleware;
-use Adlogix\Confluence\Client\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use GuzzleHttp\HandlerStack;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
@@ -61,8 +61,8 @@ class ClientBuilder
     /**
      * ClientBuilder constructor.
      *
-     * @param                         $baseUri
-     * @param AuthenticationInterface $authentication
+     * @param                                                        $baseUri
+     * @param AuthenticationInterface                                $authentication
      */
     public function __construct($baseUri, AuthenticationInterface $authentication)
     {

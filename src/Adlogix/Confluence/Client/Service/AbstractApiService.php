@@ -47,4 +47,15 @@ class AbstractApiService extends AbstractService
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }
     }
+
+
+
+
+
+    protected function mergeQueryOptions(array $oldQueryOptions, array $newQueryOptions){
+        return array_merge_recursive(
+            $oldQueryOptions,
+            $newQueryOptions
+        );
+    }
 }

@@ -13,6 +13,7 @@ namespace Adlogix\Confluence\Client\HttpClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class HttpClient
@@ -48,6 +49,34 @@ class HttpClient implements HttpClientInterface
         return $this->request('GET', $uri, null, $options);
     }
 
+
+
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function post($uri, $json, array $options = [])
+    {
+        return $this->request('POST', $uri, $json, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function put($uri, $json, array $options = [])
+    {
+        return $this->request('PUT', $uri, $json, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete($uri, array $options = [])
+    {
+        return $this->request('DELETE', $uri, null, $options);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -60,4 +89,5 @@ class HttpClient implements HttpClientInterface
 
         return $this->client->request($method, $uri, $options);
     }
+
 }

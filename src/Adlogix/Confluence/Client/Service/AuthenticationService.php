@@ -12,7 +12,7 @@
 namespace Adlogix\Confluence\Client\Service;
 
 
-use Adlogix\Confluence\Client\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use JMS\Serializer\SerializerInterface;
 
 /**
@@ -44,5 +44,5 @@ class AuthenticationService extends AbstractService
     {
         return $this->authentication->getToken();
     }
-    
+
 }

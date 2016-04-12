@@ -16,7 +16,7 @@ namespace Adlogix\Confluence\Client\Entity\Connect;
  * @package Adlogix\Confluence\Client\Entity\Connect
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-class DescriptorVendor implements DescriptorInterface
+class DescriptorVendor
 {
     /**
      * @var string

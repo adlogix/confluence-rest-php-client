@@ -9,14 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Security;
+namespace Adlogix\Confluence\Client\Security\Authentication;
 
 
-use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorBuilder;
+use Adlogix\Confluence\Client\Entity\Connect\DescriptorInterface;
 use Adlogix\Confluence\Client\Entity\Connect\EmptyToken;
 use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
-use Adlogix\Confluence\Client\Security\ConnectJwtAuthentication;
+use Adlogix\Confluence\Client\Entity\Connect\TokenInterface;
+use Adlogix\Confluence\Client\Security\JwtAbstractAuthentication;
 use JMS\Serializer\SerializerInterface;
 
 
@@ -25,14 +26,14 @@ use JMS\Serializer\SerializerInterface;
  * @package Adlogix\Confluence\Client\Security
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-class ConnectAuthentication implements AuthenticationInterface
+abstract class AbstractAuthentication implements AuthenticationInterface
 {
 
     /**
      * @var TokenInterface
      */
     protected $token;
-
+    
     /**
      * @var SerializerInterface|null
      */
@@ -50,36 +51,45 @@ class ConnectAuthentication implements AuthenticationInterface
 
 
     /**
-     * ConnectAuthentication constructor.
-     *
-     * @param SecurityContext     $securityContext
-     * @param Descriptor          $descriptor
-     * @param SerializerInterface $serializer
-     *
+     * {@inheritdoc}
      */
     public function __construct(
         SecurityContext $securityContext,
-        Descriptor $descriptor,
+        DescriptorInterface $descriptor,
         SerializerInterface $serializer = null
     ) {
         $this->securityContext = $securityContext;
         $this->serializer = $serializer;
         $this->descriptor = $descriptor;
 
-        //$descriptor->setAuthentication($this->authentication->getType());
-        
         $this->descriptor->setAuthentication($this->getType());
 
         $this->token = new EmptyToken();
-
     }
 
 
     /**
      * {@inheritdoc}
      */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescriptor()
+    {
+        return $this->descriptor;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function getHeaders()
     {
+        return [];
     }
 
     /**
@@ -87,19 +97,6 @@ class ConnectAuthentication implements AuthenticationInterface
      */
     public function getQueryParameters()
     {
-    }
-
-
-    /**
-     * @return TokenInterface
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function getDescriptor()
-    {
-        return $this->descriptor;
+        return [];
     }
 }

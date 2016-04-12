@@ -12,16 +12,7 @@
 namespace Adlogix\Confluence\Client\Entity\Connect;
 
 
-class EmptyToken implements TokenInterface
+class EmptyToken extends AbstractToken
 {
 
-    public function setQueryString($method, $uri)
-    {
-        // TODO: Implement setQueryString() method.
-    }
-
-    public function sign($encode = true)
-    {
-        // TODO: Implement sign() method.
-    }
 }

@@ -32,8 +32,9 @@ class ApiError
     /**
      * ApiError constructor.
      *
-     * @param int          $code
-     * @param string       $message
+     * @param int    $code
+     * @param string $message
+     * @param array  $fieldErrors
      */
     public function __construct($code, $message, array $fieldErrors = [])
     {

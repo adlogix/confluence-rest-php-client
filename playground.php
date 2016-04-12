@@ -2,14 +2,11 @@
 
 
 use Adlogix\Confluence\Client\ClientBuilder;
-use Adlogix\Confluence\Client\Security\ConnectJwtAuthentication;
+use Adlogix\Confluence\Client\Security\Authentication\JwtHeaderAuthentication;
 use GuzzleHttp\Exception\ClientException;
 use JMS\Serializer\SerializerBuilder;
 
 require_once 'vendor/autoload.php';
-
-require_once 'config.default.php';
-@require_once 'config.local.php';
 
 $descriptor = json_encode(
     [
@@ -39,14 +36,13 @@ $serializer = SerializerBuilder::create()
 
 
 $payload = file_get_contents('payload.json');
-$securityContext = $serializer->deserialize($payload, 'Adlogix\Confluence\Client\Entity\Connect\SecurityContext',
-    'json');
+$securityContext = $serializer->deserialize($payload, 'Adlogix\Confluence\Client\Entity\Connect\SecurityContext', 'json');
 $descriptor = $serializer->deserialize($descriptor, 'Adlogix\Confluence\Client\Entity\Connect\Descriptor', 'json');
 
 
 $client = ClientBuilder::create(
     'http://confluence.dev/confluence',
-    new ConnectJwtAuthentication(
+    new JwtHeaderAuthentication(
         $securityContext,
         $descriptor
     )

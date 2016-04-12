@@ -11,13 +11,19 @@
 
 namespace Adlogix\Confluence\Client\Entity\Connect;
 
-
+/**
+ * Interface TokenInterface
+ * @package Adlogix\Confluence\Client\Entity\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 interface TokenInterface
 {
 
     /**
      * @param string $method
      * @param string $url
+     *
+     * @return TokenInterface
      */
     public function setQueryString($method, $url);
 
@@ -27,4 +33,29 @@ interface TokenInterface
      * @return string
      */
     public function sign($encode = true);
+
+
+    /**
+     * @param string $appUrl
+     *
+     * @return TokenInterface
+     */
+    public function setAppUrl($appUrl);
+
+
+    /**
+     * @param int $time
+     *
+     * @return TokenInterface
+     */
+    public function setIssuedAtTime($time);
+
+
+    /**
+     * @param int $date
+     *
+     * @return TokenInterface
+     */
+    public function setExpirationDate($date);
+
 }

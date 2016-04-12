@@ -12,7 +12,8 @@
 namespace Adlogix\Confluence\Client\HttpClient\Middleware;
 
 
-use Adlogix\Confluence\Client\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -33,15 +34,23 @@ class AuthenticationMiddleware
     private $appUrl;
 
     /**
+     * @var bool
+     */
+    private $inHeader;
+
+    /**
      * AuthenticationMiddleware constructor.
      *
      * @param AuthenticationInterface $authentication
      * @param string                  $appUrl
+     * @param bool                    $inHeader
      */
-    public function __construct(AuthenticationInterface $authentication, $appUrl)
+    public function __construct(AuthenticationInterface $authentication, $appUrl, $inHeader = true)
     {
         $this->authentication = $authentication;
         $this->appUrl = $appUrl;
+
+        $this->inHeader = (bool)$inHeader;
     }
 
     /**
@@ -52,9 +61,9 @@ class AuthenticationMiddleware
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
-            echo (string)$request->getUri();
 
-            $this->authentication->getToken()
+            $this->authentication
+                ->getToken()
                 ->setAppUrl($this->appUrl)
                 ->setQueryString($request->getMethod(), $request->getUri());
 
@@ -62,24 +71,9 @@ class AuthenticationMiddleware
                 $request = $request->withHeader($key, $value);
             }
 
-
-            $uri = $request->getUri();
-            $query = $uri->getQuery();
-            if(empty($query)){
-                $query = "?";
+            foreach ($this->authentication->getQueryParameters() as $key => $value) {
+                $request = $request->withUri(Uri::withQueryValue($request->getUri(), $key, $value));
             }
-            else{
-                $query = $query."&";
-            }
-
-            $queryParams = [];
-            foreach( $this->authentication->getQueryParameters() as $key => $value){
-                $queryParams[] = $key.'='.$value;
-            }
-            $query = $query . implode('&', $queryParams);
-            $uri = $uri->withQuery($query);
-            $request = $request->withUri($uri);
-
 
             return $handler($request, $options);
         };

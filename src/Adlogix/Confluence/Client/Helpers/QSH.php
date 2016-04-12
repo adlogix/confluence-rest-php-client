@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Entity\Connect;
+namespace Adlogix\Confluence\Client\Helpers;
 
 /**
  * Class QSH
- * @package Adlogix\Confluence\Client\Entity\Connect
+ * @package Adlogix\Confluence\Client\Helpers
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-class QSH
+class Qsh
 {
     /**
      * @param $method

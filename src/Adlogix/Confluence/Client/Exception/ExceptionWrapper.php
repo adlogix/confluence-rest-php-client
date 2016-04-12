@@ -69,17 +69,55 @@ class ExceptionWrapper
      */
     private function create401Error(RequestException $exception)
     {
+        $request = $exception->getRequest();
         $response = $exception->getResponse();
 
-        if (in_array('AUTHENTICATED_FAILED', $response->getHeader('X-Seraph-LoginReason'))) {
-            return new ApiError($exception->getCode(), 'Invalid Credentials');
+
+        if (!$request->hasHeader('Authorization') && !$request->hasHeader('Authentication')) {
+            return new ApiError($exception->getCode(), 'Authentication Required');
         }
+
+
+        switch ($response->getHeader('X-Seraph-LoginReason')) {
+            case 'AUTHENTICATED_FAILED':
+                $msg = 'Could not be authenticated';
+                break;
+
+            case 'AUTHENTICATION_DENIED':
+                $msg = 'Not allowed to login';
+                break;
+
+            case 'AUTHORIZATION_FAILED':
+            case 'AUTHORISATION_FAILED':
+                $msg = 'Could not be authorised';
+                break;
+
+            case 'OUT':
+                $msg = 'Logged out';
+                break;
+            default:
+                $msg = 'Invalid Credentials';
+                break;
+        }
+
+        return new ApiError($exception->getCode(), $msg);
     }
+
 
     /**
      * @param RequestException $exception
+     *
+     * @return ApiError
      */
     private function create4xxError(RequestException $exception)
     {
+        $response = $exception->getResponse();
+
+        return $this->serializer->deserialize(
+            $response->getBody()
+                ->getContents(),
+            ApiError::class,
+            'json'
+        );
     }
 }

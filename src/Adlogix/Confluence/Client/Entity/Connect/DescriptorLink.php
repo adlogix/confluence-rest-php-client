@@ -16,7 +16,7 @@ namespace Adlogix\Confluence\Client\Entity\Connect;
  * @package Adlogix\Confluence\Client\Entity\Connect
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */
-class DescriptorLink implements DescriptorInterface
+class DescriptorLink
 {
     /**
      * @var array

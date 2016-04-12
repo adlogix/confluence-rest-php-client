@@ -12,9 +12,8 @@
 namespace Adlogix\Confluence\Client\Service;
 
 
-use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
 use Adlogix\Confluence\Client\Entity\ConnectDescriptorInterface;
-use Adlogix\Confluence\Client\Security\ConnectAuthentication;
+use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use JMS\Serializer\SerializerInterface;
 
 class DescriptorService extends AbstractService
@@ -28,16 +27,15 @@ class DescriptorService extends AbstractService
     /**
      * DescriptorService constructor.
      *
-     * @param SerializerInterface   $serializer
-     * @param ConnectAuthentication $authentication
-     *
+     * @param SerializerInterface     $serializer
+     * @param AuthenticationInterface $authentication
      */
-    public function __construct(SerializerInterface $serializer, ConnectAuthentication $authentication)
+    public function __construct(SerializerInterface $serializer, AuthenticationInterface $authentication)
     {
         parent::__construct($serializer);
         $this->authentication = $authentication;
     }
-    
+
     /**
      * @return string
      */

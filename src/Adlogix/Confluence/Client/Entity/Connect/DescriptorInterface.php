@@ -11,12 +11,29 @@
 
 namespace Adlogix\Confluence\Client\Entity\Connect;
 
-/**
- * Interface DescriptorInterface
- * @package Adlogix\Confluence\Client\Entity\Connect
- * @author  Cedric Michaux <cedric@adlogix.eu>
- */
+
 interface DescriptorInterface
 {
+    /**
+     * Descriptor constructor.
+     *
+     * @param string $baseUrl
+     * @param string $key
+     *
+     */
+    public function __construct($baseUrl, $key);
 
+
+    /**
+     * @param $authentication
+     *
+     * @return DescriptorInterface
+     */
+    public function setAuthentication($authentication);
+
+
+    /**
+     * @return string
+     */
+    public function getKey();
 }

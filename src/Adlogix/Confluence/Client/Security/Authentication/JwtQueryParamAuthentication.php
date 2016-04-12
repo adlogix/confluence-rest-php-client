@@ -9,26 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Security;
+namespace Adlogix\Confluence\Client\Security\Authentication;
 
-use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
 
-/**
- * Class NoAuthentication
- * @package Adlogix\Confluence\Client\Security\Connect
- * @author  Cedric Michaux <cedric@adlogix.eu>
- */
-class ConnectNoAuthentication extends ConnectAuthentication implements ConnectAuthenticationInterface
+class JwtQueryParamAuthentication extends AbstractJwtAuthentication
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return "none";
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -42,7 +27,8 @@ class ConnectNoAuthentication extends ConnectAuthentication implements ConnectAu
      */
     public function getQueryParameters()
     {
-        return [];
+        return [
+            "jwt" => $this->token->sign()
+        ];
     }
-
 }

@@ -12,12 +12,12 @@
 namespace Adlogix\Confluence\Client;
 
 
-use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
+
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
-use Adlogix\Confluence\Client\Security\AuthenticationInterface;
+use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use Adlogix\Confluence\Client\Service\AuthenticationService;
 use Adlogix\Confluence\Client\Service\DescriptorService;
-use Adlogix\Confluence\Client\Service\PageService;
+use Adlogix\Confluence\Client\Service\ContentService;
 use Adlogix\Confluence\Client\Service\ServiceInterface;
 use Adlogix\Confluence\Client\Service\SpaceService;
 use JMS\Serializer\SerializerInterface;
@@ -28,7 +28,7 @@ use JMS\Serializer\SerializerInterface;
  * @author  Cedric Michaux <cedric@adlogix.eu>
  *
  * @method SpaceService spaces
- * @method PageService pages
+ * @method ContentService pages
  * @method DescriptorService descriptor
  * @method AuthenticationService autentication
  */
@@ -54,8 +54,8 @@ class Client
     /**
      * Client constructor.
      *
-     * @param HttpClientInterface $httpClient
-     * @param SerializerInterface $serializer
+     * @param HttpClientInterface     $httpClient
+     * @param SerializerInterface     $serializer
      * @param AuthenticationInterface $authentication
      */
     public function __construct(
@@ -82,16 +82,18 @@ class Client
                 $service = new SpaceService($this->serializer, $this->httpClient);
                 break;
 
-            case 'page':
-            case 'pages':
-                $service = new PageService($this->serializer, $this->httpClient);
+            case 'content':
+            case 'contents':
+                $service = new ContentService($this->serializer, $this->httpClient);
                 break;
 
             case 'descriptor':
+            case 'descriptors':
                 $service = new DescriptorService($this->serializer, $this->authentication);
                 break;
-            
+
             case 'authentication':
+            case 'authentications':
                 $service = new AuthenticationService($this->serializer, $this->authentication);
                 break;
 
