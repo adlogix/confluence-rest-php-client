@@ -3,5 +3,4 @@ Adlogix\Confluence\Client\Entity\Collection\SpaceCollection:
   properties:
     spaces:
       type: array<Adlogix\Confluence\Client\Entity\Space>
-      serialized_name: results
 

@@ -37,6 +37,11 @@ class Space
     private $type;
 
     /**
+     * @var string;
+     */
+    private $description;
+
+    /**
      * @return int
      */
     public function getId()
@@ -111,5 +116,26 @@ class Space
         $this->type = $type;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Space
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    
 
 }

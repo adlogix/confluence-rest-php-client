@@ -11,10 +11,13 @@
 
 namespace Adlogix\Confluence\Client\Service;
 
+use Adlogix\Confluence\Client\Entity\Collection\ContentCollection;
+use Adlogix\Confluence\Client\Entity\Content;
+
 /**
  * Class PageService
  * @package Adlogix\Confluence\Client\Service
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class ContentService extends AbstractApiService
 {
@@ -28,9 +31,7 @@ class ContentService extends AbstractApiService
     public function all($spaceKey = "", array $options = [])
     {
 
-
-        
-        if(!empty($spaceKey)){
+        if (!empty($spaceKey)) {
             $options = $this->mergeQueryOptions($options, [
                 "query" => [
                     "spaceKey" => $spaceKey
@@ -39,8 +40,21 @@ class ContentService extends AbstractApiService
         }
 
         $all = $this->get('content', $options);
-        
-        return $all;
+        return $this->deserialize(
+            $all,
+            ContentCollection::class
+        );
+
+    }
+
+
+    public function findById($id)
+    {
+        $content = $this->get('content/' . $id);
+        return $this->deserialize(
+            $content,
+            Content::class
+        );
     }
 
 }

@@ -48,10 +48,12 @@ class AbstractApiService extends AbstractService
         }
     }
 
-
-
-
-
+    /**
+     * @param array $oldQueryOptions
+     * @param array $newQueryOptions
+     *
+     * @return mixed
+     */
     protected function mergeQueryOptions(array $oldQueryOptions, array $newQueryOptions){
         return array_merge_recursive(
             $oldQueryOptions,

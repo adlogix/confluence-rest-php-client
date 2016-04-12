@@ -17,7 +17,7 @@ use Adlogix\Confluence\Client\Entity\Space;
 /**
  * Class SpaceService
  * @package Adlogix\Confluence\Client\Service
- * @author Cedric Michaux <cedric@adlogix.eu>
+ * @author  Cedric Michaux <cedric@adlogix.eu>
  */
 class SpaceService extends AbstractApiService
 {
@@ -33,23 +33,23 @@ class SpaceService extends AbstractApiService
 
         return $this->deserialize(
             $all,
-            'Adlogix\Confluence\Client\Entity\Collection\SpaceCollection'
+            SpaceCollection::class
         );
     }
 
     /**
-     * @param string      $key
-     * @param array $options
+     * @param string $key
+     * @param array  $options
      *
      * @return Space
      */
-    public function byKey($key, array $options = [])
+    public function findByKey($key, array $options = [])
     {
         $space = $this->get(sprintf('space/%s', $key), $options);
 
         return $this->deserialize(
             $space,
-            'Adlogix\Confluence\Client\Entity\Space'
+            Space::class
         );
     }
 }

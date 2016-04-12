@@ -1,17 +1,14 @@
-Adlogix\Confluence\Client\Entity\Space:
+Adlogix\Confluence\Client\Entity\Content:
   exclusion_policy: ALL
   properties:
     id:
       type: integer
 
-    key:
-      type: string
-
-    name:
-      type: string
-
     type:
       type: string
 
-    description:
+    status:
+      type: string
+
+    title:
       type: string
