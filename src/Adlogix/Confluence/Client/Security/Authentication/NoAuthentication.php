@@ -11,6 +11,8 @@
 
 namespace Adlogix\Confluence\Client\Security\Authentication;
 
+use Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication;
+
 /**
  * Class NoAuthentication
  * @package Adlogix\Confluence\Client\Security\Connect
@@ -24,7 +26,7 @@ class NoAuthentication extends AbstractAuthentication
      */
     public function getType()
     {
-        return "none";
+        return  DescriptorAuthentication::TYPE_NONE;
     }
 
 }

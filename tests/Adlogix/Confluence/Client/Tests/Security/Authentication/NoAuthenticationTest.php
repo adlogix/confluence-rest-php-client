@@ -26,14 +26,10 @@ class NoAuthenticationTest extends TestCase
     public function return_Type_Correct()
     {
         $securityContext = $this->getMock(SecurityContext::class);
-
         $descriptor = $this->getMock(DescriptorInterface::class);
         
-        
-
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('none')
             ->willReturnSelf();
 
         $noAuthentication = new NoAuthentication($securityContext, $descriptor);

@@ -30,7 +30,6 @@ class JwtQueryParamAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 
@@ -58,7 +57,6 @@ class JwtQueryParamAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 
@@ -85,7 +83,6 @@ class JwtQueryParamAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 

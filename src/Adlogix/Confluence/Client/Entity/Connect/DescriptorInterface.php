@@ -25,11 +25,11 @@ interface DescriptorInterface
 
 
     /**
-     * @param $authentication
+     * @param DescriptorAuthentication $authentication
      *
      * @return DescriptorInterface
      */
-    public function setAuthentication($authentication);
+    public function setAuthentication(DescriptorAuthentication $authentication);
 
 
     /**

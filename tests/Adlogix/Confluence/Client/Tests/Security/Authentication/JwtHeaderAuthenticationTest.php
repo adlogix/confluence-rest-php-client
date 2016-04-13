@@ -30,7 +30,6 @@ class JwtHeaderAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 
@@ -47,6 +46,8 @@ class JwtHeaderAuthenticationTest extends TestCase
     }
 
 
+
+
     /**
      * @test
      * @expectedException LogicException
@@ -58,7 +59,6 @@ class JwtHeaderAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 
@@ -85,7 +85,6 @@ class JwtHeaderAuthenticationTest extends TestCase
 
         $descriptor->expects($this->once())
             ->method("setAuthentication")
-            ->with('jwt')
             ->willReturnSelf();
 
 

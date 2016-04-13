@@ -102,9 +102,9 @@ class Descriptor implements DescriptorInterface
     /**
      * {@inheritdoc}
      */
-    public function setAuthentication($authentication)
+    public function setAuthentication(DescriptorAuthentication $authentication)
     {
-        $this->authentication['type'] = $authentication;
+        $this->authentication = $authentication;
         return $this;
     }
 

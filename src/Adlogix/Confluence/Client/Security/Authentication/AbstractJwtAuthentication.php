@@ -12,6 +12,7 @@
 namespace Adlogix\Confluence\Client\Security\Authentication;
 
 
+use Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorInterface;
 use Adlogix\Confluence\Client\Entity\Connect\JwtToken;
 use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
@@ -38,6 +39,6 @@ abstract class AbstractJwtAuthentication extends AbstractAuthentication
      */
     public function getType()
     {
-        return 'jwt';
+        return DescriptorAuthentication::TYPE_JWT;
     }
 }

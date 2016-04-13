@@ -16,3 +16,5 @@ Adlogix\Confluence\Client\Entity\Connect\Descriptor:
       type: Adlogix\Confluence\Client\Entity\Connect\DescriptorVendor
     scopes:
       type: array
+    authentication:
+      type: Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication

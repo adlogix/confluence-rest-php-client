@@ -12,6 +12,7 @@
 namespace Adlogix\Confluence\Client\Security\Authentication;
 
 
+use Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorBuilder;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorInterface;
 use Adlogix\Confluence\Client\Entity\Connect\EmptyToken;
@@ -61,8 +62,8 @@ abstract class AbstractAuthentication implements AuthenticationInterface
         $this->securityContext = $securityContext;
         $this->serializer = $serializer;
         $this->descriptor = $descriptor;
-
-        $this->descriptor->setAuthentication($this->getType());
+        
+        $this->descriptor->setAuthentication(new DescriptorAuthentication($this->getType()));
 
         $this->token = new EmptyToken();
     }
