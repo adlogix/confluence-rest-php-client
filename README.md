@@ -106,7 +106,6 @@ _The default login:password is admin:admin_
 4. Put _http://atlassianconnect.dev/descriptor.json_ in the field and click upload
 5. You can now make requests to confluence rest api...
 
-
 ## Basic usage of `confluence-rest-php-client` client
 
 Based on [AtlassianConnect documentation](https://developer.atlassian.com/static/connect/docs/latest/guides/introduction.html) just with just with read access implemented
