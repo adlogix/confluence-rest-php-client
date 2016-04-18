@@ -13,9 +13,9 @@ namespace Adlogix\Confluence\Client\Tests\Service;
 
 
 use Adlogix\Confluence\Client\Entity\Collection\SpaceCollection;
-use Adlogix\Confluence\Client\Entity\Utils\SpaceFaker;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Service\SpaceService;
+use Adlogix\Confluence\Client\Tests\Entity\Utils\SpaceFaker;
 use Adlogix\Confluence\Client\Tests\TestCase;
 use GuzzleHttp\Psr7\Response;
 

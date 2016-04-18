@@ -13,9 +13,9 @@ namespace Adlogix\Confluence\Client\Tests\Service;
 
 
 use Adlogix\Confluence\Client\Entity\Collection\ContentCollection;
-use Adlogix\Confluence\Client\Entity\Utils\ContentFaker;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Service\ContentService;
+use Adlogix\Confluence\Client\Tests\Entity\Utils\ContentFaker;
 use Adlogix\Confluence\Client\Tests\TestCase;
 use GuzzleHttp\Psr7\Response;
 

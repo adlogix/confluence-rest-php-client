@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Adlogix\Confluence\Client\Entity\Utils;
+namespace Adlogix\Confluence\Client\Tests\Entity\Utils;
 
 
 trait fakerCreateManyTrait
