@@ -13,6 +13,13 @@ namespace Adlogix\Confluence\Client\Entity\Connect;
 
 /**
  * Class Descriptor
+ * The descriptor is the description of your add-on.
+ *
+ * @see https://developer.atlassian.com/static/connect/docs/latest/modules/
+ *      
+ * You can validate it's output there:
+ * @see https://atlassian-connect-validator.herokuapp.com/validate
+ *
  * @package Adlogix\Confluence\Client\Entity\Connect
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */

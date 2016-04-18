@@ -30,6 +30,9 @@ $lifecycle
  * The authentication method will be set depending on the authentication you pass at the client builder later
  *
  * @see https://developer.atlassian.com/static/connect/docs/latest/modules/
+ *
+ * You can validate it's output there:
+ * @see https://atlassian-connect-validator.herokuapp.com/validate
  */
 $descriptor = new Descriptor(
     "http://atlassianconnect.dev/",

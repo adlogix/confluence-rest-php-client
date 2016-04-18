@@ -13,6 +13,11 @@ namespace Adlogix\Confluence\Client\Entity\Collection;
 
 
 
+/**
+ * Class Collection
+ * @package Adlogix\Confluence\Client\Entity\Collection
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class Collection implements CollectionInterface
 {
 
