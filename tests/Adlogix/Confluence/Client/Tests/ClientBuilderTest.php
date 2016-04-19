@@ -24,7 +24,7 @@ class ClientBuilderTest extends TestCase
     public function build_Simple_Success()
     {
         $authentication = $this->getMock(AuthenticationInterface::class);
-        $clientBuilder = new ClientBuilder('/some/path', $authentication);
+        $clientBuilder = ClientBuilder::create('/some/path', $authentication);
         $client = $clientBuilder->build();
 
         $this->assertInstanceOf(Client::class, $client);
@@ -36,7 +36,7 @@ class ClientBuilderTest extends TestCase
     public function build_WithNoAuthentication_ThrowsException()
     {
         try {
-            new ClientBuilder('/', null);
+            ClientBuilder::create('/', null);
             $this->fail('Should have thrown an exception');
         } catch (\Exception $exception) {
             $this->assertContains(
@@ -59,7 +59,7 @@ class ClientBuilderTest extends TestCase
 
         $authentication = $this->getMock(AuthenticationInterface::class);
 
-        new ClientBuilder($invalidBaseUri, $authentication);
+        ClientBuilder::create($invalidBaseUri, $authentication);
     }
 
     /**

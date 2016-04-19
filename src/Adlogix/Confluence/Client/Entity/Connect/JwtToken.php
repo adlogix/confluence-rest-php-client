@@ -15,6 +15,19 @@ namespace Adlogix\Confluence\Client\Entity\Connect;
 use Adlogix\Confluence\Client\Helpers\Qsh;
 use Firebase\JWT\JWT;
 
+/**
+ * Class JwtToken
+ *
+ * The JWT standard can be found there
+ * @see https://jwt.io/
+ *
+ * You can test your JWT token validity against Atlassian there
+ * @see http://jwt-decoder.herokuapp.com/jwt/decode
+ *
+ *
+ * @package Adlogix\Confluence\Client\Entity\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class JwtToken extends AbstractToken
 {
 

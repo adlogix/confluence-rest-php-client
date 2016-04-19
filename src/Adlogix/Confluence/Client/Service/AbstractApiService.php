@@ -47,7 +47,7 @@ class AbstractApiService extends AbstractService
 
         } catch (RequestException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
-        }catch (ClientException $exception) {
+        } catch (ClientException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }
     }

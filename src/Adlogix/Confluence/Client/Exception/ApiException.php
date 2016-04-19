@@ -11,9 +11,6 @@
 
 namespace Adlogix\Confluence\Client\Exception;
 
-
-use Adlogix\Confluence\Client\Entity\Error\ApiError;
-
 /**
  * Class ApiException
  * @package Adlogix\Confluence\Client\Exception
@@ -22,22 +19,4 @@ use Adlogix\Confluence\Client\Entity\Error\ApiError;
 class ApiException extends \Exception
 {
 
-    /**
-     * @var ApiError
-     */
-    private $apiError;
-
-    public function __construct(ApiError $apiError)
-    {
-        parent::__construct($apiError->getMessage(), $apiError->getCode());
-        $this->apiError = $apiError;
-    }
-
-    /**
-     * @return ApiError
-     */
-    public function getApiError()
-    {
-        return $this->apiError;
-    }
 }

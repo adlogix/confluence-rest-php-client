@@ -1,6 +1,0 @@
-Adlogix\Confluence\Client\Entity\Error\ApiError:
-  properties:
-    code:
-      type: integer
-    message:
-      type: string

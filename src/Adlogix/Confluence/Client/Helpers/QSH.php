@@ -13,6 +13,9 @@ namespace Adlogix\Confluence\Client\Helpers;
 
 /**
  * Class QSH
+ * QSH is a Query String Hash requested by Atlassian in the JWT token
+ * @see https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html#qsh
+ *
  * @package Adlogix\Confluence\Client\Helpers
  * @author  Cedric Michaux <cedric@adlogix.eu>
  */

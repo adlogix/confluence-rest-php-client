@@ -6,6 +6,7 @@ use Adlogix\Confluence\Client\ClientBuilder;
 use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle;
 use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
+use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\Security\Authentication\JwtHeaderAuthentication;
 use GuzzleHttp\Psr7\Uri;
 
@@ -95,9 +96,9 @@ switch ($url->getPath()) {
     default:
         // When no action is given, just run test code.
         try {
-            var_dump($client->spaces()->all());
-        } catch (ApiException $ex) {
-            var_dump($ex->getApiError());
+            var_dump($client->space()->all());
+        } catch (ApiException $e) {
+            echo 'ApiException' . $e->getMessage();
         }
 
         break;

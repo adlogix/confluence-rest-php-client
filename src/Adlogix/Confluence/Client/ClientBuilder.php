@@ -64,7 +64,7 @@ class ClientBuilder
      * @param                                                        $baseUri
      * @param AuthenticationInterface                                $authentication
      */
-    public function __construct($baseUri, AuthenticationInterface $authentication)
+    private function __construct($baseUri, AuthenticationInterface $authentication)
     {
         $this->authentication = $authentication;
 
@@ -118,7 +118,7 @@ class ClientBuilder
     private function buildDefaultSerializer()
     {
         return SerializerBuilder::create()
-            ->addMetadataDir(__DIR__ . '/Resources/serializer', 'Adlogix\Confluence\Client')
+            ->addMetadataDir(__DIR__ . '/Resources/serializer', Client::class)
             ->addDefaultHandlers()
             ->build();
     }

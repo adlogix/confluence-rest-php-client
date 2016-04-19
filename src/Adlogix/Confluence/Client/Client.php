@@ -12,7 +12,7 @@
 namespace Adlogix\Confluence\Client;
 
 
-
+use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use Adlogix\Confluence\Client\Service\AuthenticationService;
@@ -20,6 +20,8 @@ use Adlogix\Confluence\Client\Service\DescriptorService;
 use Adlogix\Confluence\Client\Service\ContentService;
 use Adlogix\Confluence\Client\Service\ServiceInterface;
 use Adlogix\Confluence\Client\Service\SpaceService;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
 
 /**
@@ -118,6 +120,13 @@ class Client
 
     public function sendRawRequest($method, $uri, $json = null, array $options = [])
     {
-        return $this->httpClient->request($method, $uri, $json, $options);
+        try {
+            return $this->httpClient->request($method, $uri, $json, $options);
+
+        } catch (RequestException $exception) {
+            throw ExceptionWrapper::wrap($exception, $this->serializer);
+        } catch (ClientException $exception) {
+            throw ExceptionWrapper::wrap($exception, $this->serializer);
+        }
     }
 }

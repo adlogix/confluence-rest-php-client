@@ -49,10 +49,6 @@ class HttpClient implements HttpClientInterface
         return $this->request('GET', $uri, null, $options);
     }
 
-
-
-
-
     /**
      * {@inheritdoc}
      */
@@ -82,7 +78,7 @@ class HttpClient implements HttpClientInterface
      */
     public function request($method, $uri, $json = null, array $options = [])
     {
-        if(!empty($json)){
+        if (!empty($json)) {
             $options['body'] = $json;
             $options['headers']['content-type'] = 'application/json';
         }

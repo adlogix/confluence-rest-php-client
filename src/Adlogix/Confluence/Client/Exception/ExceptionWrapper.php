@@ -52,22 +52,18 @@ class ExceptionWrapper
     private function parseException(RequestException $exception)
     {
         if ($exception->getCode() == 401) {
-            return new ApiException($this->create401Error($exception));
+            return new ApiException($this->create401ErrorMessage($exception), $exception->getCode(), $exception);
         }
 
-        if ($exception instanceof ClientException) {
-            return new ApiException($this->create4xxError($exception));
-        }
-
-        return new ApiException(new ApiError($exception->getCode(), $exception->getMessage()));
+        return new ApiException($exception->getMessage(), $exception->getCode(), $exception);
     }
 
     /**
      * @param RequestException $exception
      *
-     * @return ApiError
+     * @return string
      */
-    private function create401Error(RequestException $exception)
+    private function create401ErrorMessage(RequestException $exception)
     {
         $request = $exception->getRequest();
         $response = $exception->getResponse();
@@ -81,7 +77,7 @@ class ExceptionWrapper
             && !array_key_exists('jwt', $queryParams)
             && empty($queryParams['jwt'])
         ) {
-            return new ApiError($exception->getCode(), 'Authentication Required');
+            return 'Authentication Required';
         }
 
         switch ($response->getHeader('X-Seraph-LoginReason')) {
@@ -106,24 +102,6 @@ class ExceptionWrapper
                 break;
         }
 
-        return new ApiError($exception->getCode(), $msg);
-    }
-
-
-    /**
-     * @param RequestException $exception
-     *
-     * @return ApiError
-     */
-    private function create4xxError(RequestException $exception)
-    {
-        $response = $exception->getResponse();
-
-        return $this->serializer->deserialize(
-            $response->getBody()
-                ->getContents(),
-            ApiError::class,
-            'json'
-        );
+        return $msg;
     }
 }

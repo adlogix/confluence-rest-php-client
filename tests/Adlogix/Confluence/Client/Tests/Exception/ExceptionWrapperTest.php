@@ -11,7 +11,7 @@
 
 namespace Adlogix\Confluence\Client\Tests\Exception;
 
-use Adlogix\Confluence\Client\Entity\Error\ApiError;
+
 use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
 use Adlogix\Confluence\Client\Tests\TestCase;
@@ -56,7 +56,7 @@ class ExceptionWrapperTest extends TestCase
         $requestException = new RequestException('Error 401', $request, $response);
 
         $this->assertEquals(
-            new ApiException(new ApiError(401, 'Authentication Required')),
+            new ApiException('Authentication Required', 401, $requestException),
             ExceptionWrapper::wrap($requestException, $this->getSerializer())
         );
     }
@@ -97,11 +97,12 @@ class ExceptionWrapperTest extends TestCase
         $requestException = new RequestException('Error 401', $request, $response);
 
         $this->assertEquals(
-            new ApiException(new ApiError(401, $exceptionMessage)),
+            new ApiException($exceptionMessage, 401, $requestException),
             ExceptionWrapper::wrap($requestException, $this->getSerializer())
         );
 
     }
+
 
     /**
      * @test
@@ -114,7 +115,7 @@ class ExceptionWrapperTest extends TestCase
     {
 
         $uri = new Uri('/some/path?jwt=jwttoken');
-        
+
         $request = $this->getMock(RequestInterface::class);
         $request->expects($this->atLeastOnce())
             ->method('hasHeader')
@@ -138,11 +139,14 @@ class ExceptionWrapperTest extends TestCase
         $requestException = new RequestException('Error 401', $request, $response);
 
         $this->assertEquals(
-            new ApiException(new ApiError(401, $exceptionMessage)),
+            new ApiException($exceptionMessage, 401, $requestException),
             ExceptionWrapper::wrap($requestException, $this->getSerializer())
         );
     }
 
+    /**
+     * @return array
+     */
     public function loginReasons_dataprovider()
     {
         return [
@@ -155,47 +159,31 @@ class ExceptionWrapperTest extends TestCase
         ];
     }
 
-
     /**
      * @test
      */
     public function wrap_4xxWithErrors_ReturnsApiException()
     {
 
-        $expectedApiError = new ApiError(
-            400,
-            'Invalid Request'
-        );
-
         $request = $this->getMock(RequestInterface::class);
-
-        $stream = $this->getMock(StreamInterface::class);
-        $stream->expects($this->once())
-            ->method('getContents')
-            ->willReturn($this->serialize($expectedApiError));
-
         $response = $this->getMock(ResponseInterface::class);
 
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->willReturn(400);
+            ->willReturn(403);
 
-        $response->expects($this->once())
-            ->method('getBody')
-            ->willReturn($stream);
 
-        /**
-         * @var RequestInterface  $request
-         * @var ResponseInterface $response
-         *
-         */
-        $requestException = new ClientException('Error 400', $request, $response);
+        $requestException = new ClientException('Error 403', $request, $response);
 
-        /** @var RequestException $requestException */
         $this->assertEquals(
-            new ApiException($expectedApiError),
+            new ApiException(
+                'Error 403',
+                403,
+                $requestException
+            ),
             ExceptionWrapper::wrap($requestException, $this->getSerializer())
         );
+
     }
 
     /**
@@ -213,10 +201,10 @@ class ExceptionWrapperTest extends TestCase
 
         $requestException = new RequestException('Error 500', $request, $response);
 
-        /** @var RequestException $requestException */
         $this->assertEquals(
-            new ApiException(new ApiError(500, 'Error 500')),
+            new ApiException('Error 500', 500, $requestException),
             ExceptionWrapper::wrap($requestException, $this->getSerializer())
         );
     }
+
 }
