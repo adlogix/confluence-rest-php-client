@@ -48,7 +48,7 @@ class JwtQueryParamAuthenticationTest extends TestCase
 
     /**
      * @test
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function return_WithoutQSH_ThrowsException()
     {
@@ -99,7 +99,7 @@ class JwtQueryParamAuthenticationTest extends TestCase
         $token->setQueryString('GET', '/some/path');
 
         $this->assertEquals(
-            ['jwt' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMjM0NSIsImlhdCI6MTIzNDU2LCJleHAiOjEyMzQ1NywicXNoIjoiOTA5MTQ0MjIwYjhlYjQ3OTk2MjNiZGJiMTk4YTAxNDg1ZDRhN2FkOTc1ZDI2MWNkZmUxNGRhZmUwMjE3NDhjMyJ9.5TwSmHVGWaBZM78PNVtHSoU1gtZ21X-SDuSGsIRmNS4'],
+            ['jwt' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxMjM0NSIsImlhdCI6MTIzNDU2LCJleHAiOjEyMzQ1NywicXNoIjoiOTA5MTQ0MjIwYjhlYjQ3OTk2MjNiZGJiMTk4YTAxNDg1ZDRhN2FkOTc1ZDI2MWNkZmUxNGRhZmUwMjE3NDhjMyIsInN1YiI6bnVsbCwiYXVkIjpudWxsLCJjb250ZXh0IjpudWxsfQ.fka3-FkVQNfnKfUfQXoNlQNYwW09GZxrMuK6ZDhN3Xg'],
             $jwtQueryParamAuthentication->getQueryParameters()
         );
 

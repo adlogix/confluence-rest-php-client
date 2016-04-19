@@ -11,17 +11,13 @@
 
 namespace Adlogix\Confluence\Client\Security\Authentication;
 
-
+/**
+ * Class JwtQueryParamAuthentication
+ * @package Adlogix\Confluence\Client\Security\Authentication
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class JwtQueryParamAuthentication extends AbstractJwtAuthentication
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getHeaders()
-    {
-        return [];
-    }
-
     /**
      * {@inheritdoc}
      */

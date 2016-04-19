@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Security\Authentication;
 
-
+/**
+ * Class JwtHeaderAuthentication
+ * @package Adlogix\Confluence\Client\Security\Authentication
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class JwtHeaderAuthentication extends AbstractJwtAuthentication
 {
 
@@ -24,13 +28,4 @@ class JwtHeaderAuthentication extends AbstractJwtAuthentication
             "Authorization" => sprintf('JWT %s', $this->token->sign())
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getQueryParameters()
-    {
-        return [];
-    }
-
 }

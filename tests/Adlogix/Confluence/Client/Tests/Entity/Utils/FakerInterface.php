@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Tests\Entity\Utils;
 
-
+/**
+ * Interface FakerInterface
+ * @package Adlogix\Confluence\Client\Tests\Entity\Utils
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 interface FakerInterface
 {
     /**

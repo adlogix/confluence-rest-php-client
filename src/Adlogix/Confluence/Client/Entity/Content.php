@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Entity;
 
-
+/**
+ * Class Content
+ * @package Adlogix\Confluence\Client\Entity
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class Content
 {
     /**

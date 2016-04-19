@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Entity\Collection;
 
-
+/**
+ * Interface CollectionInterface
+ * @package Adlogix\Confluence\Client\Entity\Collection
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 interface CollectionInterface
 {
 

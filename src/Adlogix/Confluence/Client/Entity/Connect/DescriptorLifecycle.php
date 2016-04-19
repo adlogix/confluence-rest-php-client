@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Entity\Connect;
 
-
+/**
+ * Class DescriptorLifecycle
+ * @package Adlogix\Confluence\Client\Entity\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class DescriptorLifecycle
 {
 

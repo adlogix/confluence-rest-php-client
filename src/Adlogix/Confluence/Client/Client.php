@@ -20,7 +20,6 @@ use Adlogix\Confluence\Client\Service\DescriptorService;
 use Adlogix\Confluence\Client\Service\ContentService;
 use Adlogix\Confluence\Client\Service\ServiceInterface;
 use Adlogix\Confluence\Client\Service\SpaceService;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
 
@@ -32,7 +31,7 @@ use JMS\Serializer\SerializerInterface;
  * @method SpaceService spaces
  * @method ContentService pages
  * @method DescriptorService descriptor
- * @method AuthenticationService autentication
+ * @method AuthenticationService authentication
  */
 class Client
 {
@@ -124,8 +123,6 @@ class Client
             return $this->httpClient->request($method, $uri, $json, $options);
 
         } catch (RequestException $exception) {
-            throw ExceptionWrapper::wrap($exception, $this->serializer);
-        } catch (ClientException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }
     }

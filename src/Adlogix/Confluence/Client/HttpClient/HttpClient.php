@@ -13,7 +13,6 @@ namespace Adlogix\Confluence\Client\HttpClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Class HttpClient

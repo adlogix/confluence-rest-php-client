@@ -14,6 +14,11 @@ namespace Adlogix\Confluence\Client\Entity\Collection;
 
 use Adlogix\Confluence\Client\Entity\Content;
 
+/**
+ * Class ContentCollection
+ * @package Adlogix\Confluence\Client\Entity\Collection
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class ContentCollection extends Collection
 {
 

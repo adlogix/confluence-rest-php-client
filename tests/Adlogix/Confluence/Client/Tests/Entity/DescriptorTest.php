@@ -17,6 +17,11 @@ use Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle;
 use Adlogix\Confluence\Client\Tests\TestCase;
 
+/**
+ * Class DescriptorTest
+ * @package Adlogix\Confluence\Client\Tests\Entity
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class DescriptorTest extends TestCase
 {
 
@@ -44,6 +49,62 @@ class DescriptorTest extends TestCase
             $this->serialize($descriptor)
         );
 
+    }
+
+    /**
+     * @test
+     * @dataProvider authorizedCharacters_dataprovider
+     *
+     * @param $chars
+     */
+    public function create_WithAuthorizedChars_Success($chars)
+    {
+        new Descriptor('some/path', $chars);
+    }
+
+    public function authorizedCharacters_dataprovider()
+    {
+        return [
+            ['abcdefghijklmnopqrstuvwxyz'],
+            ['ABCDEFGHIJKLMNOPQRSTUVWXYZ'],
+            ['123456789'],
+            ['.-_']
+        ];
+    }
+
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function create_WithKeyTooLong_Exception()
+    {
+        new Descriptor('some/path', '12345678901234567890123456789012345678901234567890123456789012345678901234567890');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @dataProvider restrictedCharacter_dataprovider
+     *
+     * @param $chars
+     */
+    public function create_WithRestrictedChars_Exception($chars)
+    {
+        new Descriptor('some/path', $chars);
+    }
+
+    public function restrictedCharacter_dataprovider()
+    {
+        return [
+            ['{'],
+            ['}'],
+            ['['],
+            [']'],
+            ['\''],
+            ['\\'],
+            ['"']
+        ];
     }
 
 

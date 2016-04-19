@@ -13,11 +13,15 @@ namespace Adlogix\Confluence\Client\Tests\Service;
 
 
 use Adlogix\Confluence\Client\Entity\Collection\SpaceCollection;
+use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Service\SpaceService;
 use Adlogix\Confluence\Client\Tests\Entity\Utils\SpaceFaker;
 use Adlogix\Confluence\Client\Tests\TestCase;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 class SpaceServiceTest extends TestCase
 {
@@ -35,7 +39,7 @@ class SpaceServiceTest extends TestCase
 
         $httpClient->expects($this->once())
             ->method('get')
-            ->with('space/'.$expectedSpace->getKey(), [])
+            ->with('space/' . $expectedSpace->getKey(), [])
             ->willReturn($response);
 
         $spaceService = new SpaceService($this->getSerializer(), $httpClient);
@@ -68,4 +72,43 @@ class SpaceServiceTest extends TestCase
         $this->assertEquals($expectedSpaceCollection, $spaceCollection);
     }
 
+
+    /**
+     * @test
+     */
+    public function get_CatchRequestException_Exception()
+    {
+        $this->expectException(ApiException::class);
+
+        $request = $this->getMock(RequestInterface::class);
+        $exception = new RequestException("message", $request);
+
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $httpClient->expects($this->once())
+            ->method('get')
+            ->willThrowException($exception);
+
+        $spaceService = new SpaceService($this->getSerializer(), $httpClient);
+        $spaceService->all();
+
+    }
+
+    /**
+     * @test
+     */
+    public function get_CatchClientException_Exception()
+    {
+        $this->expectException(ApiException::class);
+        $request = $this->getMock(RequestInterface::class);
+        $exception = new ClientException("message", $request);
+
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $httpClient->expects($this->once())
+            ->method('get')
+            ->willThrowException($exception);
+
+        $spaceService = new SpaceService($this->getSerializer(), $httpClient);
+        $spaceService->all();
+
+    }
 }

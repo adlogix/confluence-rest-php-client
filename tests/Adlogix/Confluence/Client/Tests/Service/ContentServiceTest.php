@@ -13,11 +13,15 @@ namespace Adlogix\Confluence\Client\Tests\Service;
 
 
 use Adlogix\Confluence\Client\Entity\Collection\ContentCollection;
+use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Service\ContentService;
 use Adlogix\Confluence\Client\Tests\Entity\Utils\ContentFaker;
 use Adlogix\Confluence\Client\Tests\TestCase;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 
 class ContentServiceTest extends TestCase
 {
@@ -30,13 +34,13 @@ class ContentServiceTest extends TestCase
         $expectedContent = ContentFaker::create(1);
 
         $response = new Response(200, [], $this->serialize($expectedContent));
-        
+
         $httpClient = $this->getMock(HttpClientInterface::class);
         $httpClient->expects($this->once())
             ->method('get')
-            ->with('content/'.$expectedContent->getId(), [])
+            ->with('content/' . $expectedContent->getId(), [])
             ->willReturn($response);
-        
+
         $contentService = new ContentService($this->getSerializer(), $httpClient);
         $content = $contentService->findById($expectedContent->getId());
 
@@ -66,7 +70,7 @@ class ContentServiceTest extends TestCase
 
         $this->assertEquals($expectedContentCollection, $contentCollection);
     }
-    
+
 
     /**
      * @test
@@ -90,4 +94,44 @@ class ContentServiceTest extends TestCase
     }
 
 
+    /**
+     * @test
+     */
+    public function get_CatchRequestException_Exception()
+    {
+        $this->expectException(ApiException::class);
+
+        $request = $this->getMock(RequestInterface::class);
+        $exception = new RequestException("message", $request);
+
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $httpClient->expects($this->once())
+            ->method('get')
+            ->willThrowException($exception);
+
+        $contentService = new ContentService($this->getSerializer(), $httpClient);
+        $contentService->all();
+
+    }
+
+    /**
+     * @test
+     */
+    public function get_CatchClientException_Exception()
+    {
+        $this->expectException(ApiException::class);
+
+        $request = $this->getMock(RequestInterface::class);
+
+        $exception = new ClientException("message", $request);
+
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $httpClient->expects($this->once())
+            ->method('get')
+            ->willThrowException($exception);
+
+        $contentService = new ContentService($this->getSerializer(), $httpClient);
+        $contentService->all();
+
+    }
 }

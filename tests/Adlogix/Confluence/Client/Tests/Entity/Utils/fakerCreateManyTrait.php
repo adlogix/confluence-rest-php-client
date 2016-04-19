@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Tests\Entity\Utils;
 
-
+/**
+ * Class fakerCreateManyTrait
+ * @package Adlogix\Confluence\Client\Tests\Entity\Utils
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 trait fakerCreateManyTrait
 {
     /**

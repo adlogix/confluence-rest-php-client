@@ -14,6 +14,11 @@ namespace Adlogix\Confluence\Client\Tests\Entity\Utils;
 
 use Adlogix\Confluence\Client\Entity\Content;
 
+/**
+ * Class ContentFaker
+ * @package Adlogix\Confluence\Client\Tests\Entity\Utils
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class ContentFaker implements FakerInterface
 {
     

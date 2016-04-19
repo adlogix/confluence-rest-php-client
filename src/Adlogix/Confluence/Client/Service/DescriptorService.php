@@ -12,14 +12,18 @@
 namespace Adlogix\Confluence\Client\Service;
 
 
-use Adlogix\Confluence\Client\Entity\ConnectDescriptorInterface;
 use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use JMS\Serializer\SerializerInterface;
 
+/**
+ * Class DescriptorService
+ * @package Adlogix\Confluence\Client\Service
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 class DescriptorService extends AbstractService
 {
     /**
-     * @var ConnectAuthentication
+     * @var AuthenticationInterface
      */
     private $authentication;
 

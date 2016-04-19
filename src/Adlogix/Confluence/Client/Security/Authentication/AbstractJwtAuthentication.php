@@ -18,6 +18,11 @@ use Adlogix\Confluence\Client\Entity\Connect\JwtToken;
 use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
 use JMS\Serializer\SerializerInterface;
 
+/**
+ * Class AbstractJwtAuthentication
+ * @package Adlogix\Confluence\Client\Security\Authentication
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 abstract class AbstractJwtAuthentication extends AbstractAuthentication
 {
 

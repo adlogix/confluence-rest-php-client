@@ -19,10 +19,10 @@ use Firebase\JWT\JWT;
  * Class JwtToken
  *
  * The JWT standard can be found there
- * @see https://jwt.io/
+ * @see     https://jwt.io/
  *
  * You can test your JWT token validity against Atlassian there
- * @see http://jwt-decoder.herokuapp.com/jwt/decode
+ * @see     http://jwt-decoder.herokuapp.com/jwt/decode
  *
  *
  * @package Adlogix\Confluence\Client\Entity\Connect
@@ -97,7 +97,7 @@ class JwtToken extends AbstractToken
     public function sign($encode = true)
     {
 
-        if(null == $this->queryStringHash){
+        if (null == $this->queryStringHash) {
             throw new \LogicException('You should provide a Query String before calling sign');
         }
 
@@ -105,14 +105,131 @@ class JwtToken extends AbstractToken
             'iss' => $this->issuer,
             'iat' => $this->issuedAtTime,
             'exp' => $this->expirationDate,
-            'qsh' => $this->queryStringHash
+            'qsh' => $this->queryStringHash,
+            'sub' => $this->subject,
+            'aud' => $this->audience,
+            'context' => $this->context
         ];
-        
+
 
         if (!$encode) {
             return $payload;
         }
         return JWT::encode($payload, $this->secret);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIssuer()
+    {
+        return $this->issuer;
+    }
+
+    /**
+     * @param string $issuer
+     *
+     * @return JwtToken
+     */
+    public function setIssuer($issuer)
+    {
+        $this->issuer = $issuer;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryStringHash()
+    {
+        return $this->queryStringHash;
+    }
+
+    /**
+     * @param string $queryStringHash
+     *
+     * @return JwtToken
+     */
+    public function setQueryStringHash($queryStringHash)
+    {
+        $this->queryStringHash = $queryStringHash;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param string $subject
+     *
+     * @return JwtToken
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAudience()
+    {
+        return $this->audience;
+    }
+
+    /**
+     * @param string $audience
+     *
+     * @return JwtToken
+     */
+    public function setAudience($audience)
+    {
+        $this->audience = $audience;
+        return $this;
+    }
+
+    /**
+     * @return object
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param object $context
+     *
+     * @return JwtToken
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecret()
+    {
+        return $this->secret;
+    }
+
+    /**
+     * @param string $secret
+     *
+     * @return JwtToken
+     */
+    public function setSecret($secret)
+    {
+        $this->secret = $secret;
+        return $this;
     }
 
 

@@ -11,8 +11,7 @@
 
 namespace Adlogix\Confluence\Client\Exception;
 
-use Adlogix\Confluence\Client\Entity\Error\ApiError;
-use GuzzleHttp\Exception\ClientException;
+
 use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
 

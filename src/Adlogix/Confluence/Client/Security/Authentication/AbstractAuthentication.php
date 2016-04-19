@@ -13,13 +13,12 @@ namespace Adlogix\Confluence\Client\Security\Authentication;
 
 
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication;
-use Adlogix\Confluence\Client\Entity\Connect\DescriptorBuilder;
 use Adlogix\Confluence\Client\Entity\Connect\DescriptorInterface;
 use Adlogix\Confluence\Client\Entity\Connect\EmptyToken;
 use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
 use Adlogix\Confluence\Client\Entity\Connect\TokenInterface;
-use Adlogix\Confluence\Client\Security\JwtAbstractAuthentication;
 use JMS\Serializer\SerializerInterface;
+
 
 
 /**
@@ -46,7 +45,7 @@ abstract class AbstractAuthentication implements AuthenticationInterface
     private $securityContext;
 
     /**
-     * @var Descriptor
+     * @var DescriptorInterface
      */
     protected $descriptor;
 

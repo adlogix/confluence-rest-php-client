@@ -11,7 +11,11 @@
 
 namespace Adlogix\Confluence\Client\Entity\Connect;
 
-
+/**
+ * Interface DescriptorInterface
+ * @package Adlogix\Confluence\Client\Entity\Connect
+ * @author  Cedric Michaux <cedric@adlogix.eu>
+ */
 interface DescriptorInterface
 {
     /**

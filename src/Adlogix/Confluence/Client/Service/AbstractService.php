@@ -11,9 +11,6 @@
 
 namespace Adlogix\Confluence\Client\Service;
 
-use Adlogix\Confluence\Client\Exception\ExceptionWrapper;
-use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
-use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
