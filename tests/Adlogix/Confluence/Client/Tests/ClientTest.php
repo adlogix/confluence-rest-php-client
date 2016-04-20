@@ -12,13 +12,18 @@
 namespace Adlogix\Confluence\Client\Tests;
 
 use Adlogix\Confluence\Client\Client;
+use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
 use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
 use Adlogix\Confluence\Client\Service\AuthenticationService;
 use Adlogix\Confluence\Client\Service\ContentService;
 use Adlogix\Confluence\Client\Service\DescriptorService;
 use Adlogix\Confluence\Client\Service\SpaceService;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ClientTest
@@ -30,12 +35,28 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function service_WithInvalidName_Exception()
+    {
+        $serializer = $this->getMock(SerializerInterface::class);
+
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $authentication = $this->getMock(AuthenticationInterface::class);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->service("nonExistingService");
+    }
+
+    /**
+     * @test
      * @dataProvider service_dataprovider
      *
      * @param string $serviceName
      * @param string $expectedClassName
      */
-    public function service_WIthValidName_ReturnsServiceInstance($serviceName, $expectedClassName)
+    public function service_WithValidName_ReturnsServiceInstance($serviceName, $expectedClassName)
     {
         $serializer = $this->getMock(SerializerInterface::class);
 
@@ -69,7 +90,22 @@ class ClientTest extends TestCase
 
         $this->assertEquals($expectedClassName, get_class($service));
     }
-    
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function service_ThroughMagicMethodWithInvalidName_Exception()
+    {
+        $serializer = $this->getMock(SerializerInterface::class);
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $authentication = $this->getMock(AuthenticationInterface::class);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->nonExistingService();
+    }
+
     /**
      * @return array
      */
@@ -86,6 +122,74 @@ class ClientTest extends TestCase
             ['authentications', AuthenticationService::class],
 
         ];
+    }
+
+
+    /**
+     * @test
+     */
+    public function rawRequest_WithCorrectParameters_Success()
+    {
+
+        $serializer = $this->getMock(SerializerInterface::class);
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $authentication = $this->getMock(AuthenticationInterface::class);
+
+        $response = $this->getMock(ResponseInterface::class);
+
+        $httpClient->expects($this->once())
+            ->method("request")
+            ->willReturn($response);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->sendRawRequest('get', "some/path");
+    }
+
+    /**
+     * @test
+     */
+    public function rawRequest_CatchRequestException_Exception()
+    {
+        $this->expectException(ApiException::class);
+
+        $serializer = $this->getMock(SerializerInterface::class);
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $authentication = $this->getMock(AuthenticationInterface::class);
+
+        $request = $this->getMock(RequestInterface::class);
+        $exception = new RequestException("message", $request);
+
+        $httpClient->expects($this->once())
+            ->method("request")
+            ->willThrowException($exception);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->sendRawRequest('get', "some/path");
+    }
+
+    /**
+     * @test
+     */
+    public function rawRequest_CatchClientException_Exception()
+    {
+        $this->expectException(ApiException::class);
+
+        $serializer = $this->getMock(SerializerInterface::class);
+        $httpClient = $this->getMock(HttpClientInterface::class);
+        $authentication = $this->getMock(AuthenticationInterface::class);
+
+        $request = $this->getMock(RequestInterface::class);
+        $exception = new ClientException("message", $request);
+
+        $httpClient->expects($this->once())
+            ->method("request")
+            ->willThrowException($exception);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->sendRawRequest('get', "some/path");
     }
 
 }

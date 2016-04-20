@@ -118,7 +118,7 @@ class ClientBuilder
     private function buildDefaultSerializer()
     {
         return SerializerBuilder::create()
-            ->addMetadataDir(__DIR__ . '/Resources/serializer', Client::class)
+            ->addMetadataDir(__DIR__ . '/Resources/serializer', __NAMESPACE__)
             ->addDefaultHandlers()
             ->build();
     }

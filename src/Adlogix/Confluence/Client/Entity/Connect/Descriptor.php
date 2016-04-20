@@ -87,7 +87,7 @@ class Descriptor implements DescriptorInterface
         }
 
         if(preg_match('/^[a-zA-Z0-9-._]+$/', $key) !== 1){
-            throw new \InvalidArgumentException('Atlassian requires that the application key match a string containing only alphanumeric characters including dash, dot and underscore characters (^[a-zA-Z0-9-._]+$)');
+            throw new \InvalidArgumentException('Invalid character : The application key may only contain characters including ".", "_", "-" and alphanumeric characters');
         }
 
         $this->baseUrl = $baseUrl;
