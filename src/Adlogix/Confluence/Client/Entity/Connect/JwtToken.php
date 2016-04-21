@@ -105,12 +105,20 @@ class JwtToken extends AbstractToken
             'iss' => $this->issuer,
             'iat' => $this->issuedAtTime,
             'exp' => $this->expirationDate,
-            'qsh' => $this->queryStringHash,
-            'sub' => $this->subject,
-            'aud' => $this->audience,
-            'context' => $this->context
+            'qsh' => $this->queryStringHash
         ];
 
+        if (null !== $this->context) {
+            $payload['context'] = $this->context;
+        }
+
+        if (null !== $this->subject) {
+            $payload['sub'] = $this->subject;
+        }
+
+        if (null !== $this->audience) {
+            $payload['aud'] = $this->audience;
+        }
 
         if (!$encode) {
             return $payload;

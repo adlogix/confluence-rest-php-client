@@ -43,7 +43,7 @@ class JwtTokenTest extends TestCase
         $token->setQueryString('GET', '/some/path');
 
         $this->assertEquals(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0ZXN0SXNzdWVyIiwiaWF0IjoxMjM0NTY3LCJleHAiOjEyMzgxNjcsInFzaCI6IjkwOTE0NDIyMGI4ZWI0Nzk5NjIzYmRiYjE5OGEwMTQ4NWQ0YTdhZDk3NWQyNjFjZGZlMTRkYWZlMDIxNzQ4YzMiLCJzdWIiOm51bGwsImF1ZCI6bnVsbCwiY29udGV4dCI6bnVsbH0.euyfp2nPRM5E_gGV0AXhm271h-QbBM-CvaKUtU2h1ZI',
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0ZXN0SXNzdWVyIiwiaWF0IjoxMjM0NTY3LCJleHAiOjEyMzgxNjcsInFzaCI6IjkwOTE0NDIyMGI4ZWI0Nzk5NjIzYmRiYjE5OGEwMTQ4NWQ0YTdhZDk3NWQyNjFjZGZlMTRkYWZlMDIxNzQ4YzMifQ.eneZNcg42dCVpB4krbqktMByMPXv1QYbiV-M50Q212A',
             $token->sign()
         );
     }
