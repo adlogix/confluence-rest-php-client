@@ -83,7 +83,7 @@ class JwtToken extends AbstractToken
      */
     public function setQueryString($method, $url)
     {
-        $url = str_replace($this->appUrl, "", $url);
+        $url = rawurldecode(str_replace($this->appUrl, "", $url));
 
         $this->queryStringHash = Qsh::create($method, $url);
         return $this;
