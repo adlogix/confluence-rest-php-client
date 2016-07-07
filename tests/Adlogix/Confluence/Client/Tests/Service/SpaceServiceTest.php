@@ -75,11 +75,10 @@ class SpaceServiceTest extends TestCase
 
     /**
      * @test
+     * @expectedException Adlogix\Confluence\Client\Exception\ApiException
      */
     public function get_CatchRequestException_Exception()
     {
-        $this->expectException(ApiException::class);
-
         $request = $this->getMock(RequestInterface::class);
         $exception = new RequestException("message", $request);
 
@@ -95,10 +94,10 @@ class SpaceServiceTest extends TestCase
 
     /**
      * @test
+     * @expectedException Adlogix\Confluence\Client\Exception\ApiException
      */
     public function get_CatchClientException_Exception()
     {
-        $this->expectException(ApiException::class);
         $request = $this->getMock(RequestInterface::class);
         $exception = new ClientException("message", $request);
 
