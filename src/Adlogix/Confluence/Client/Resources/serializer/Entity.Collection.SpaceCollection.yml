@@ -1,0 +1,6 @@
+Adlogix\Confluence\Client\Entity\Collection\SpaceCollection:
+  exclusion_policy: ALL
+  properties:
+    spaces:
+      type: array<Adlogix\Confluence\Client\Entity\Space>
+
