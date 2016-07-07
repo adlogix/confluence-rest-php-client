@@ -1,5 +1,5 @@
 {
-    "name": "adlogix-ondemand/confluence-rest-php-client",
+    "name": "adlogix/confluence-rest-php-client",
     "version": "0.1.0",
     "license": "MIT",
     "description": "Confluence API PHP Client",
