@@ -101,4 +101,3 @@ _The default login:password is admin:admin_
 ## Basic usage of `confluence-rest-php-client` client
 
 Based on [AtlassianConnect documentation](https://developer.atlassian.com/static/connect/docs/latest/guides/introduction.html) just with just with read access implemented
-
