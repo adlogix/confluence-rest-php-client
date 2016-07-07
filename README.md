@@ -8,16 +8,8 @@ An Object Oriented wrapper for Confluence, written PHP5
 
 ## Installation
 
-```json
-{
-    "require": {
-        "adlogix-ondemand/confluence-rest-php-client": "dev-master"
-    },
-    {
-      "type": "vcs",
-      "url": "git@bitbucket.org:adlogix-ondemand/confluence-rest-php-client.git"
-    }
-}
+```bash
+$ php composer.phar require adlogix/confluence-rest-php-client
 ```
 
 ## Minimal Usage

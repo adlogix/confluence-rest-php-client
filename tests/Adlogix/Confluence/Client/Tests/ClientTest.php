@@ -148,11 +148,10 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     *  @expectedException Adlogix\Confluence\Client\Exception\ApiException
      */
     public function rawRequest_CatchRequestException_Exception()
     {
-        $this->expectException(ApiException::class);
-
         $serializer = $this->getMock(SerializerInterface::class);
         $httpClient = $this->getMock(HttpClientInterface::class);
         $authentication = $this->getMock(AuthenticationInterface::class);
@@ -171,11 +170,10 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     * @expectedException Adlogix\Confluence\Client\Exception\ApiException
      */
     public function rawRequest_CatchClientException_Exception()
     {
-        $this->expectException(ApiException::class);
-
         $serializer = $this->getMock(SerializerInterface::class);
         $httpClient = $this->getMock(HttpClientInterface::class);
         $authentication = $this->getMock(AuthenticationInterface::class);
