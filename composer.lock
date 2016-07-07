@@ -4,9 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "75746e0494b2cbf6155e24050f647386",
-    "content-hash": "908a97eba7c105706c65c827823bc696",
+    "hash": "535fa702718f8044e6e275f18133a743",
+    "content-hash": "a1d288df50ccc7e679fe07c4ac1cb1c0",
     "packages": [
+        {
+            "name": "adlogix/guzzle-atlassian-connect-middleware",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
+                "reference": "07d8d6351b1acd677f58105fee9c7b1093d90b7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/07d8d6351b1acd677f58105fee9c7b1093d90b7e",
+                "reference": "07d8d6351b1acd677f58105fee9c7b1093d90b7e",
+                "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^3.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.0",
+                "phpunit/phpunit": "^4.8",
+                "silex/silex": "^1.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "For using this library as it was created for Guzzle6. But you should be able to use it with any PSR-7 HTTP Client"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Adlogix\\GuzzleAtlassianConnect\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cedric Michaux",
+                    "email": "cedric@adlogix.eu",
+                    "homepage": "http://www.adlogix.eu"
+                }
+            ],
+            "description": "An Atlassian Connect authentication middleware for Guzzle",
+            "keywords": [
+                "Authentication",
+                "Confluence",
+                "Guzzle",
+                "QSH",
+                "atlassian",
+                "connect",
+                "jira",
+                "jwt",
+                "middleware"
+            ],
+            "time": "2016-07-07 12:38:26"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
