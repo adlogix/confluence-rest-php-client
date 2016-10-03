@@ -1,52 +1,57 @@
-confluence:
-    image: translucent/atlassian-plugin-sdk:latest
-    volumes:
-      - ./atlassian/app:/usr/src/app
-      - ./atlassian/repository:/root/.m2/repository/
-    expose:
-        - 1990
-    dns: 192.168.99.1
-    environment:
-        VIRTUAL_HOST: confluence.dev
+version: "2"
 
-    command: atlas-run-standalone --container tomcat7x --product confluence --version 6.0.0-OD-2016.13.3-1129 --data-version 6.0.0-OD-2016.13.3-1129 --bundled-plugins com.atlassian.bundles:json-schema-validator-atlassian-bundle:1.0.4,com.atlassian.upm:atlassian-universal-plugin-manager-plugin:2.21-D20160128T024330,com.atlassian.jwt:jwt-plugin:1.5.9-0019,com.atlassian.plugins:atlassian-connect-plugin:1.1.84 --jvmargs -Datlassian.upm.on.demand=true
-    tty: yes
+services:
+    ngrok:
+        image: wernight/ngrok
+        volumes:
+          - .:/var/www
+        networks:
+            - adsdaq_proxy-tier
+        expose:
+            - '4040'
+        depends_on:
+            - nginx
+
+        environment:
+            VIRTUAL_HOST: ngrok.dev
+
+        command: ngrok start --config /var/www/ngrok.yml --all
+
+    application:
+        image: debian:jessie
+        volumes:
+            - .:/var/www/confluence-client
+
+    nginx:
+        image: he8us/nginx
+        expose:
+            - "80"
+        environment:
+            VIRTUAL_HOST: confluence-client.dev
+            DOCUMENT_ROOT: /var/www/confluence-client
+            LOG_FILE: confluence-client
+        volumes_from:
+            - application
+        depends_on:
+            - php
+        networks:
+            - adsdaq_proxy-tier
 
 
-application:
-    image: debian:jessie
-    volumes:
-        - .:/var/www/atlconnect
 
-nginx:
-    image: he8us/nginx
-    ports:
-        - 80
+    php:
+        image: he8us/php-fpm-dev:7.0
+        expose:
+            - "9000"
+        environment:
+            APPLICATION_ENV: dev
+            TIMEZONE: "Europe/Brussels"
+        volumes_from:
+            - application
+        networks:
+            - adsdaq_proxy-tier
 
-    dns: 192.168.99.1
-    environment:
-        VIRTUAL_HOST: atlassianconnect.dev
-        DOCUMENT_ROOT: /var/www/atlconnect
-        LOG_FILE: atlconnect
 
-    links:
-        - php
-        - confluence
-
-    volumes_from:
-        - application
-
-php:
-    image: he8us/php-fpm-prod
-    expose:
-        - 9000
-
-    links:
-        - confluence
-
-    dns: 192.168.99.1
-    environment:
-        APPLICATION_ENV: dev
-        TIMEZONE: "Europe/Brussels"
-    volumes_from:
-        - application
+networks:
+    adsdaq_proxy-tier:
+      external: true
