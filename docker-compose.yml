@@ -1,6 +1,21 @@
 version: "2"
 
 services:
+    proxy:
+        image: jwilder/nginx-proxy:latest
+        ports:
+          - "80:80"
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+          - ./nginx-vhost.d:/etc/nginx/vhost.d:ro
+        depends_on:
+            - ngrok
+            - php
+            - nginx
+        networks:
+            - proxy
+
+
     ngrok:
         image: wernight/ngrok
         volumes:
@@ -53,5 +68,6 @@ services:
 
 
 networks:
+    proxy:
     adsdaq_proxy-tier:
       external: true

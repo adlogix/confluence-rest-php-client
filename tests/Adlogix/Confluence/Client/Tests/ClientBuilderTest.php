@@ -14,7 +14,7 @@ namespace Adlogix\Confluence\Client\Tests;
 
 use Adlogix\Confluence\Client\Client;
 use Adlogix\Confluence\Client\ClientBuilder;
-use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
+use Adlogix\GuzzleAtlassianConnect\Security\AuthenticationInterface;
 
 class ClientBuilderTest extends TestCase
 {

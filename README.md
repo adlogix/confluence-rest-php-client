@@ -2,6 +2,12 @@
 
 An Object Oriented wrapper for Confluence, written PHP5
 
+## tl;dr;
+* __JWT__: Json Web Token [standard](http://jwt.io/), [atlassian version](https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html), [Atlassian JWT Web decoder](http://jwt-decoder.herokuapp.com/jwt/decode) (use your query to get the QSH, use the query + the JWT token query param to validate it) 
+* __QSH__: [Query String Hash](https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html#qsh)
+* __Descriptor__: [Add-on Descriptor for Atlassian Connect](https://developer.atlassian.com/static/connect/docs/latest/modules/), [validate your descriptor against an atlassian product](https://atlassian-connect-validator.herokuapp.com/validate) (syntax check only) 
+
+
 ## Requirements
 
 * PHP >= 5.5.0
@@ -14,90 +20,50 @@ $ php composer.phar require adlogix/confluence-rest-php-client
 
 ## Minimal Usage
 
-```PHP
-
-/**
- * The Lifecycle is mandatory since Confluence needs to contact the application.
- * So you need to implement those endpoints. Minimal is to send a 200 OK header.
- * When Confluence calls those webhooks, it will send you a payload with some information.
- * @see https://developer.atlassian.com/static/connect/docs/latest/modules/lifecycle.html
- *
- * Installed => called when the plugin is installed on an instance
- * Enabled => called when the plugin is enabled on an instance. If you don't supply that the plugin is installable but can't be enabled
- */
-$lifecycle = new DescriptorLifecycle();
-$lifecycle->setInstalled('/installed');
-    //->setEnabled('/enabled');
+See the index.php at the root of this repository
 
 
-/**
- * The descriptor is the description of your plugin.
- * This one is the minimum to have read access on Confluence.
- * The authentication method will be set depending on the authentication you pass at the client builder later
- *
- * @see https://developer.atlassian.com/static/connect/docs/latest/modules/
- */
-$descriptor = new Descriptor(
-    "http://atlassianconnect.dev/",
-    'dev.mypluginkey'
-);
+## Real life testing
 
-$descriptor->setLifecycle($lifecycle)
-    ->setScopes([
-        'read'
-    ]);
+The Atlassian Product you want to authenticate to needs to contact your application using some form of webhooks, so we created the most basic application we could do to show you how it can be accomplished.
 
-/**
- * The Security Context is that payload you received upon installation.
- * It is needed to be able to sign the Authentication Token
- */
-$securityContext = new SecurityContext();
+Use docker-compose:
 
-/**
- * The only needed information is the shared secret.
- */
-if (file_exists('payload.json')) {
-    $payload = json_decode(file_get_contents('payload.json'));
-    $securityContext->setSharedSecret($payload->sharedSecret);
-}
-
-
-/**
- * Actually building our client.
- */
-$client = ClientBuilder::create(
-    'http://confluence.dev/confluence',
-    new JwtHeaderAuthentication(
-        $securityContext,
-        $descriptor
-    )
-)
-    ->setDebug(true)
-    ->build();
+```bash
+$ docker-compose up -d
 ```
 
-## Playground
 
-You'll probably want to fiddle with this client, we can understand that, but you'll need to setup your computer to use the /!\ [atlassian-plugin-sdk](). Just kidding, if you have docker installed, you just have to run `docker-compose up -d` to setup your own test environment.
-**The first launch can take 30+ minutes.** After that Confluence will sit on your computer so it will be much faster to launch. To check the advancement of the Confluence deployment run `docker-compose logs confluence`.
+### Use host names instead of ports
 
-So now that everything is up and running you have some servers that runs. If you use [jwilder/nginx-proxy]() and setup you hosts (or use [dnsmasq]()) accordingly:
+If you've launched the environment you already have a proxy running to redirect ngrok.dev and confluence-client.dev to the correct containers.
+You just have to put both domains to your host file or use a solution like [dnsmasq on OSX](https://passingcuriosity.com/2013/dnsmasq-dev-osx/), but be sure to redirect to your docker-machine IP.
 
-* Confluence, running at http://confluence.dev/confluence
-* Our PHP server, responding at http://atlassianconnect.dev
+To find your docker machine ip use:
 
-### Initial config.
+```bash
+$ docker-machine ip [machine-name]
+```
 
-In order to use confluence and be able to make REST calls to it's API we have some config to do:
 
-_The default login:password is admin:admin_
+### Get your development instance
 
-1. Go to Confluence's [General Configuration](http://confluence.dev/confluence/admin/viewgeneralconfig.action) page and set the server base url to http://confluence.dev/confluence
-2. Go to [Manage Add-ons](http://confluence.dev/confluence/plugins/servlet/upm) page
-3. Click on _Upload add-on_
-4. Put _http://atlassianconnect.dev/descriptor.json_ in the field and click upload
-5. You can now make requests to confluence rest api...
+Atlassian changed the way to work on Confluence/Jira, now in order to create your plugin, you have to get a [Developer Account](http://go.atlassian.com/cloud-dev) and create your own instance. All the steps to create your environment are defined on the [documentation page](https://developer.atlassian.com/static/connect/docs/latest/guides/development-setup.html).
+ 
+Once you have access to your own Atlassian Cloud instance and you put it in developer mode, we can continue and let the instance contact us.
 
-## Basic usage of `confluence-rest-php-client` client
+### Exposing our local app to the world
 
-Based on [AtlassianConnect documentation](https://developer.atlassian.com/static/connect/docs/latest/guides/introduction.html) just with just with read access implemented
+The Atlassian app we trying to authenticate must post some information to us, so we need to expose our app on the internet. That's the reason we have a [ngrok](https://ngrok.com/) container running. ngrok is an application which will create a tunnel between our environment and their servers, letting us to be accessed from everywhere.
+  
+You should now have a ngrok container running at [ngrok.dev](http://ngrok.dev). When you connect you should see the tunnel url and, if you open it, all the tunnel trafic.
+
+The url to use to install our demo application is https://[your-tunnel-id].eu.ngrok.io/descriptor.json 
+
+__Note:__ Everytime you restart the ngrok container, the tunnel id will change, so you should reinstall your plugin each time. I know, it's bad.
+
+### Update the ```view/index.html.twig```file
+
+Be sure to update the view/index.html.twig to set the links to real content urls in order to be able to do the requests. Be sure to replace the base url to point to our api
+
+https://adlogixdevelopers.atlassian.net/'wiki/download/attachments/197331/Adsdaq-login.png?api=v2'

@@ -12,18 +12,15 @@
 namespace Adlogix\Confluence\Client\Tests;
 
 use Adlogix\Confluence\Client\Client;
-use Adlogix\Confluence\Client\Exception\ApiException;
 use Adlogix\Confluence\Client\HttpClient\HttpClientInterface;
-use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
-use Adlogix\Confluence\Client\Service\AuthenticationService;
 use Adlogix\Confluence\Client\Service\ContentService;
-use Adlogix\Confluence\Client\Service\DescriptorService;
 use Adlogix\Confluence\Client\Service\SpaceService;
+use Adlogix\GuzzleAtlassianConnect\Security\AuthenticationInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+
 
 /**
  * Class ClientTest
@@ -115,12 +112,7 @@ class ClientTest extends TestCase
             ['content', ContentService::class],
             ['contents', ContentService::class],
             ['space', SpaceService::class],
-            ['spaces', SpaceService::class],
-            ['descriptor', DescriptorService::class],
-            ['descriptors', DescriptorService::class],
-            ['authentication', AuthenticationService::class],
-            ['authentications', AuthenticationService::class],
-
+            ['spaces', SpaceService::class]
         ];
     }
 
@@ -143,7 +135,7 @@ class ClientTest extends TestCase
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
     }
 
     /**
@@ -165,7 +157,7 @@ class ClientTest extends TestCase
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
     }
 
     /**
@@ -187,7 +179,7 @@ class ClientTest extends TestCase
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
     }
 
 }

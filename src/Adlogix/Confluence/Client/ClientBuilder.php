@@ -12,11 +12,11 @@
 namespace Adlogix\Confluence\Client;
 
 use Adlogix\Confluence\Client\HttpClient\HttpClient;
-use Adlogix\Confluence\Client\HttpClient\Middleware\AuthenticationMiddleware;
-use Adlogix\Confluence\Client\Security\Authentication\AuthenticationInterface;
+use Adlogix\GuzzleAtlassianConnect\Middleware\ConnectMiddleware;
+use Adlogix\GuzzleAtlassianConnect\Security\AuthenticationInterface;
 use GuzzleHttp\HandlerStack;
 use JMS\Serializer\SerializerBuilder;
-use JMS\Serializer\SerializerInterface;
+
 
 /**
  * Class ClientBuilder
@@ -49,13 +49,13 @@ class ClientBuilder
 
     /**
      * @param string                  $baseUri
-     * @param AuthenticationInterface $authentication
+     * @param AuthenticationInterface $authenticationMethod
      *
      * @return ClientBuilder
      */
-    public static function create($baseUri, AuthenticationInterface $authentication)
+    public static function create($baseUri, AuthenticationInterface $authenticationMethod)
     {
-        return new static($baseUri, $authentication);
+        return new static($baseUri, $authenticationMethod);
     }
 
     /**
@@ -81,12 +81,12 @@ class ClientBuilder
     {
         $this->serializer = $this->serializer ?: $this->buildDefaultSerializer();
         $stack = HandlerStack::create();
-        $stack->push(new AuthenticationMiddleware($this->authentication, $this->baseUri));
+        $stack->push(new ConnectMiddleware($this->authentication, $this->baseUri));
         
 
         return new Client(
             new HttpClient([
-                'base_uri' => $this->baseUri."/rest/api/",
+                'base_uri' => $this->baseUri,
                 'handler' => $stack,
                 'debug' => $this->debug
             ]),

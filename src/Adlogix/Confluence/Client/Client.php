@@ -46,10 +46,6 @@ class Client
      */
     private $serializer;
 
-    /**
-     * @var AuthenticationInterface
-     */
-    private $authentication;
 
 
     /**
@@ -57,16 +53,13 @@ class Client
      *
      * @param HttpClientInterface     $httpClient
      * @param SerializerInterface     $serializer
-     * @param AuthenticationInterface $authentication
      */
     public function __construct(
         HttpClientInterface $httpClient,
-        SerializerInterface $serializer,
-        AuthenticationInterface $authentication
+        SerializerInterface $serializer
     ) {
         $this->httpClient = $httpClient;
         $this->serializer = $serializer;
-        $this->authentication = $authentication;
     }
 
 
@@ -88,14 +81,9 @@ class Client
                 $service = new ContentService($this->serializer, $this->httpClient);
                 break;
 
-            case 'descriptor':
-            case 'descriptors':
-                $service = new DescriptorService($this->serializer, $this->authentication);
-                break;
-
-            case 'authentication':
-            case 'authentications':
-                $service = new AuthenticationService($this->serializer, $this->authentication);
+            case 'content':
+            case 'contents':
+                $service = new ContentService($this->serializer, $this->httpClient);
                 break;
 
             default:
@@ -117,10 +105,21 @@ class Client
     }
 
 
-    public function sendRawRequest($method, $uri, $json = null, array $options = [])
+    public function sendRawApiRequest($method, $uri, $json = null, array $options = [])
     {
         try {
-            return $this->httpClient->request($method, $uri, $json, $options);
+            return $this->httpClient->request($method, '/rest/api/'.$uri, $json, $options);
+
+        } catch (RequestException $exception) {
+            throw ExceptionWrapper::wrap($exception, $this->serializer);
+        }
+    }
+
+
+    public function sendRawAttachmentRequest($uri, array $options = [])
+    {
+        try {
+            return $this->httpClient->request("GET", $uri, null, $options);
 
         } catch (RequestException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
