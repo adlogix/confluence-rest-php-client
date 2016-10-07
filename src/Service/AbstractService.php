@@ -54,11 +54,18 @@ class AbstractService implements ServiceInterface
      * @param string                 $type
      * @param DeserializationContext $context
      *
-     * @return mixed
+     * @return object|null
      */
     protected function deserialize($json, $type, DeserializationContext $context = null)
     {
-        return $this->serializer->deserialize($json, $type, 'json', $context);
+
+        $object = $this->serializer->deserialize($json, $type, 'json', $context);
+
+        if(!$object instanceof $type){
+            return null;
+        }
+
+        return $object;
     }
 
 }
