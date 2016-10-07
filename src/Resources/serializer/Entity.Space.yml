@@ -1,0 +1,17 @@
+Adlogix\ConfluenceClient\Entity\Space:
+  exclusion_policy: ALL
+  properties:
+    id:
+      type: integer
+
+    key:
+      type: string
+
+    name:
+      type: string
+
+    type:
+      type: string
+
+    description:
+      type: string

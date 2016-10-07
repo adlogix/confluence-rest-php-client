@@ -1,106 +1,128 @@
 <?php
+use Adlogix\ConfluenceClient\ClientBuilder;
+use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 require_once 'vendor/autoload.php';
 
 
-use Adlogix\Confluence\Client\ClientBuilder;
-use Adlogix\Confluence\Client\Entity\Connect\Descriptor;
-use Adlogix\Confluence\Client\Entity\Connect\DescriptorLifecycle;
-use Adlogix\Confluence\Client\Entity\Connect\SecurityContext;
-use Adlogix\Confluence\Client\Exception\ApiException;
-use Adlogix\Confluence\Client\Security\Authentication\JwtHeaderAuthentication;
-use GuzzleHttp\Psr7\Uri;
-
 /**
- * The Lifecycle is mandatory since Confluence needs to contact the application.
- * So you need to implement those endpoints. Minimal is to send a 200 OK header.
- * When Confluence calls those webhooks, it will send you a payload with some information.
- * @see https://developer.atlassian.com/static/connect/docs/latest/modules/lifecycle.html
+ * See the 'installed' webhook on how to recover this payload.
  *
- * Installed => called when the plugin is installed on an instance
- * Enabled => called when the plugin is enabled on an instance. If you don't supply that the plugin is installable but can't be enabled
+ * The sharedSecret is given by the application we installed the add-on to,
+ * this is needed to sign our request and to validate the requests from the application.
  */
-$lifecycle = new DescriptorLifecycle();
-$lifecycle
-    ->setInstalled('/installed')
-    ->setEnabled('/enabled');
-
-
-/**
- * The descriptor is the description of your plugin.
- * This one is the minimum to have read access on Confluence.
- * The authentication method will be set depending on the authentication you pass at the client builder later
- *
- * @see https://developer.atlassian.com/static/connect/docs/latest/modules/
- *
- * You can validate it's output there:
- * @see https://atlassian-connect-validator.herokuapp.com/validate
- */
-$descriptor = new Descriptor(
-    "http://atlassianconnect.dev/",
-    'dev.mypluginkey'
-);
-
-$descriptor->setLifecycle($lifecycle)
-    ->setScopes([
-        'read'
-    ]);
-
-/**
- * The Security Context is that payload you received upon installation.
- * It is needed to be able to sign the Authentication Token
- */
-$securityContext = new SecurityContext();
-
-/**
- * The only needed information is the shared secret.
- */
+$sharedSecret = '';
+$baseUrl = '';
 if (file_exists('payload.json')) {
     $payload = json_decode(file_get_contents('payload.json'));
-    $securityContext->setSharedSecret($payload->sharedSecret);
+    $sharedSecret = $payload->sharedSecret;
+    $baseUrl = $payload->baseUrl . '/';
 }
 
-/**
- * Actually building our client.
- */
-$client = ClientBuilder::create(
-    'http://confluence.dev/confluence',
-    new JwtHeaderAuthentication(
-        $securityContext,
-        $descriptor
-    )
-)
-    ->setDebug(true)
+
+$authenticationMethod = new QueryParamAuthentication('eu.adlogix.confluence-client', $sharedSecret);
+$client = ClientBuilder::create($baseUrl, $authenticationMethod)
     ->build();
 
 
-$url = new Uri(@$_SERVER['REQUEST_URI']);
-switch ($url->getPath()) {
-    case '/descriptor.json':
-        // Show our descriptor
-        echo $client->descriptor()->get();
-        break;
+/**
+ * Since Confluence needs to reach our application to post some information, like the sharedSecret, we have to define some routes.
+ * At time of writing Confluence refuses to contact us if the route contains .php so we need to prettify our URLS.
+ * Our sample is not the best way to do it, but it's just for the demo.
+ */
 
-    case '/installed':
-        //Installation webhook
-        file_put_contents('payload.json', file_get_contents('php://input'));
-        http_response_code(200);
-        echo 'OK';
-        break;
 
-    case '/enabled':
-        //Enabled webhook.
-        http_response_code(200);
-        echo 'OK';
-        break;
+$app = new Application();
+$app['debug'] = true;
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__ . '/views',
+));
 
-    default:
-        // When no action is given, just run test code.
-        try {
-            var_dump($client->space()->all());
-        } catch (ApiException $e) {
-            echo 'ApiException' . $e->getMessage();
-        }
+/**
+ * Our sample descriptor is available at http://confluence-client.dev/descriptor.json
+ *
+ * This is the bare minimal descriptor to be defined.
+ *
+ * You can validate your descriptor
+ * @see https://atlassian-connect-validator.herokuapp.com/validate
+ */
+$app->get('/descriptor.json', function (Request $request) {
 
-        break;
-}
+    /*
+     * We have to construct the correct URL in order to confluence be able to contact us
+     * And the scheme MUST be https in order to confluence accept it.
+     */
+    $host = $request->getHttpHost();
+    $scheme = $request->getScheme();
 
+    if (preg_match('/\.ngrok\.io/', $host)) {
+        $scheme = 'https';
+    }
+
+
+    return json_encode([
+        'authentication' => [
+            'type' => 'jwt'
+        ],
+        'baseUrl' => $scheme . '://' . $host,
+        'scopes' => [
+            'read'
+        ],
+        'key' => 'eu.adlogix.confluence-client',
+        'lifecycle' => [
+            'installed' => '/installed',
+            'enabled' => '/enabled'
+        ],
+    ]);
+});
+
+/**
+ * When we install our add-on into any atlassian app, they will contact us at the URL we define in the 'installed' lifecycle.
+ * They will give us a payload containing the sharedSecret we'll need to use to sign our request.
+ * For the demo we just save the content to a file.
+ */
+$app->post('/installed', function (Request $request) {
+
+    $payload = $request->getContent();
+    file_put_contents('payload.json', $payload);
+
+    /**
+     * Be sure to send a 200 OK response, or the app will tell you that your plugin can't be installed.
+     */
+    return new Response('OK', 200);
+});
+
+
+/**
+ * Even if the documentation tell's you the only needed webhook is the installed one,
+ * they won't let you enable the add-on unless you define the route to you 'enabled' webhook.
+ */
+$app->post('/enabled', function () {
+    /**
+     * Be sure to send a 200 OK response, or the app will tell you that your plugin can't be enabled.
+     */
+    return new Response('OK', 200);
+});
+
+//Catch all route to run our test code
+$app->match('/api/{url}', function ($url) use ($client) {
+    $response = $client->sendRawApiRequest('GET', $url);
+    $content = $response->getBody()->getContents();
+    return new Response($content, $response->getStatusCode());
+
+})->assert('url', '.+');
+
+$app->match('/image/{url}', function ($url) use ($client) {
+    $response = $client->downloadAttachment($url);
+    $content = $response->getBody()->getContents();
+    return new Response($content, $response->getStatusCode(), $response->getHeaders());
+})->assert('url', '.+');
+
+$app->match('/', function (Application $app) {
+    return $app['twig']->render("index.html.twig");
+});
+
+$app->run();

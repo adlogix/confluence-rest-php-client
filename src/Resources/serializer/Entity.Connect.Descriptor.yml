@@ -1,0 +1,20 @@
+Adlogix\ConfluenceClient\Entity\Connect\Descriptor:
+  exclusion_policy: ALL
+  properties:
+    baseUrl:
+      serialized_name: baseUrl
+      type: string
+    key:
+      type: string
+    description:
+      type: string
+    name:
+      type: string
+    lifecycle:
+      type: Adlogix\ConfluenceClient\Entity\Connect\DescriptorLifecycle
+    vendor:
+      type: Adlogix\ConfluenceClient\Entity\Connect\DescriptorVendor
+    scopes:
+      type: array
+    authentication:
+      type: Adlogix\ConfluenceClient\Entity\Connect\DescriptorAuthentication

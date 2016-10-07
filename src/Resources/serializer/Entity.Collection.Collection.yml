@@ -1,0 +1,11 @@
+Adlogix\ConfluenceClient\Entity\Collection\Collection:
+  exclusion_policy: ALL
+  properties:
+    size:
+      type: integer
+
+    start:
+      type: integer
+
+    limit:
+      type: integer

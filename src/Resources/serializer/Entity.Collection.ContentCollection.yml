@@ -1,0 +1,7 @@
+Adlogix\ConfluenceClient\Entity\Collection\ContentCollection:
+  exclusion_policy: ALL
+  properties:
+    contents:
+      type: array<Adlogix\ConfluenceClient\Entity\Content>
+      serialized_name: results
+
