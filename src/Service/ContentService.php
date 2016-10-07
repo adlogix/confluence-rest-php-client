@@ -26,7 +26,7 @@ class ContentService extends AbstractApiService
      * @param string $spaceKey
      * @param array  $options
      *
-     * @return string
+     * @return ContentCollection|null
      */
     public function all($spaceKey = "", array $options = [])
     {
@@ -40,21 +40,38 @@ class ContentService extends AbstractApiService
         }
 
         $all = $this->get('content', $options);
-        return $this->deserialize(
+        $contentCollection = $this->deserialize(
             $all,
             ContentCollection::class
         );
 
+        if(!$contentCollection instanceof ContentCollection){
+            return null;
+        }
+
+        return $contentCollection;
+
     }
 
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function findById($id)
     {
         $content = $this->get('content/' . $id);
-        return $this->deserialize(
+        $content = $this->deserialize(
             $content,
             Content::class
         );
+
+        if(!$content instanceof Content){
+            return null;
+        }
+
+        return $content;
     }
 
 }

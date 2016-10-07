@@ -25,16 +25,22 @@ class SpaceService extends AbstractApiService
     /**
      * @param array $options
      *
-     * @return SpaceCollection
+     * @return SpaceCollection|null
      */
     public function all(array $options = [])
     {
         $all = $this->get('space', $options);
 
-        return $this->deserialize(
+        $spaceCollection = $this->deserialize(
             $all,
             SpaceCollection::class
         );
+
+        if(!$spaceCollection instanceof SpaceCollection){
+            return null;
+        }
+
+        return $spaceCollection;
     }
 
     /**
@@ -47,9 +53,15 @@ class SpaceService extends AbstractApiService
     {
         $space = $this->get(sprintf('space/%s', $key), $options);
 
-        return $this->deserialize(
+        $space = $this->deserialize(
             $space,
             Space::class
         );
+
+        if(!$space instanceof Space){
+            return null;
+        }
+
+        return $space;
     }
 }

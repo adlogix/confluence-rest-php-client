@@ -23,15 +23,12 @@ class HttpClient implements HttpClientInterface
 {
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     private $client;
 
     /**
-     * HttpClient constructor.
-     *
-     * @param array                $options
-     * @param ClientInterface|null $client
+     * {@inheritdoc}
      */
     public function __construct(
         array $options = [],

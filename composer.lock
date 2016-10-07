@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1fb30a158838afd58b486bfb42ae3c46",
-    "content-hash": "3099579b109bc5826e352d07a536305a",
+    "hash": "2ded48ee2a31bc0eda6b97c38c8f17fc",
+    "content-hash": "63a90108fcff62498dca29e748c7f317",
     "packages": [
         {
             "name": "adlogix/guzzle-atlassian-connect-middleware",
-            "version": "dev-feature/Handle_Spaces_in_URI",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
-                "reference": "ad0f65f55c6c7c29dde77f005762b1f68fc5717f"
+                "reference": "3d8ad249587a765181ac18f887698fbf47e2d282"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/ad0f65f55c6c7c29dde77f005762b1f68fc5717f",
-                "reference": "ad0f65f55c6c7c29dde77f005762b1f68fc5717f",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/3d8ad249587a765181ac18f887698fbf47e2d282",
+                "reference": "3d8ad249587a765181ac18f887698fbf47e2d282",
                 "shasum": ""
             },
             "require": {
@@ -42,6 +42,7 @@
                     ]
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -54,21 +55,17 @@
             ],
             "description": "An Atlassian Connect authentication middleware for Guzzle",
             "keywords": [
-                "Atlassian",
                 "Authentication",
                 "Confluence",
-                "Connect",
                 "Guzzle",
-                "JIRA",
-                "JWT",
-                "Middleware",
-                "QSH"
+                "QSH",
+                "atlassian",
+                "connect",
+                "jira",
+                "jwt",
+                "middleware"
             ],
-            "support": {
-                "source": "https://github.com/adlogix/guzzle-atlassian-connect-middleware/tree/feature/Handle_Spaces_in_URI",
-                "issues": "https://github.com/adlogix/guzzle-atlassian-connect-middleware/issues"
-            },
-            "time": "2016-10-07 10:17:29"
+            "time": "2016-10-07 13:50:57"
         },
         {
             "name": "doctrine/annotations",
@@ -2646,9 +2643,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "adlogix/guzzle-atlassian-connect-middleware": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

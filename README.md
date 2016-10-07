@@ -1,5 +1,7 @@
 # Confluence REST API PHP Client
 
+[![Build Status](https://travis-ci.org/adlogix/confluence-rest-php-client.svg?branch=master)](https://travis-ci.org/adlogix/confluence-rest-php-client) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/adlogix/confluence-rest-php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/adlogix/confluence-rest-php-client/?branch=master)
+
 An Object Oriented wrapper for Confluence, written PHP5
 
 ## tl;dr;

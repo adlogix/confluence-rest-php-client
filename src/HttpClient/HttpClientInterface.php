@@ -12,6 +12,7 @@
 namespace Adlogix\ConfluenceClient\HttpClient;
 
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -21,6 +22,14 @@ use GuzzleHttp\Psr7\Response;
  */
 interface HttpClientInterface
 {
+
+    /**
+     * HttpClient constructor.
+     *
+     * @param array                $options
+     * @param ClientInterface|null $client
+     */
+    public function __construct(array $options = [], ClientInterface $client = null);
 
     /**
      * Send a GET request.
