@@ -32,23 +32,6 @@ class ClientBuilderTest extends TestCase
 
     /**
      * @test
-     */
-    public function build_WithNoAuthentication_ThrowsException()
-    {
-        try {
-            ClientBuilder::create('/', null);
-            $this->fail('Should have thrown an exception');
-        } catch (\Exception $exception) {
-            $this->assertContains(
-                AuthenticationInterface::class,
-                $exception->getMessage()
-            );
-        }
-    }
-
-
-    /**
-     * @test
      * @expectedException \InvalidArgumentException
      * @dataProvider invalidBuilderParam_dataprovider
      *
