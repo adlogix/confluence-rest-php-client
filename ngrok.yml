@@ -1,0 +1,8 @@
+region: eu
+log: stdout
+web_addr: 0.0.0.0:4040
+tunnels:
+  confluence:
+    proto: http
+    addr: nginx:80
+    bind_tls: true

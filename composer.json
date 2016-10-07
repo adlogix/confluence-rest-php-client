@@ -1,32 +1,46 @@
 {
     "name": "adlogix/confluence-rest-php-client",
+    "description": "Confluence API PHP Client",
     "version": "0.1.0",
     "license": "MIT",
-    "description": "Confluence API PHP Client",
-    "require": {
-        "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "firebase/php-jwt": "^3.0",
-        "symfony/yaml": "^3.0",
-        "jms/serializer": "~0.16.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8"
-    },
+    "keywords": [
+        "Atlassian",
+        "Connect",
+        "JWT",
+        "QSH",
+        "Guzzle",
+        "Confluence",
+        "Authentication",
+        "Middleware"
+    ],
     "authors": [
         {
             "name": "Cedric Michaux",
-            "email": "cedric@adlogix.eu"
+            "email": "cedric@adlogix.eu",
+            "homepage": "http://www.adlogix.eu"
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Adlogix\\Confluence\\Client": "src/"
+        "psr-4": {
+            "Adlogix\\ConfluenceClient\\": [
+                "src/",
+                "tests/"
+            ]
         }
     },
-    "autoload-dev": {
-        "psr-0": {
-            "Adlogix\\Tests\\Confluence\\Client": "test/"
-        }
+    "require": {
+        "php": ">=5.5.0",
+        "adlogix/guzzle-atlassian-connect-middleware": "^1.0",
+        "jms/serializer": "^1.3",
+        "symfony/yaml": "^3.1"
+    },
+    "require-dev": {
+        "silex/silex": "^2.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "twig/twig": "^1.26",
+        "phpunit/phpunit": "^5.6"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "For using this library as it was created for Guzzle6. But you should be able to use it with any PSR-7 HTTP Client"
     }
 }

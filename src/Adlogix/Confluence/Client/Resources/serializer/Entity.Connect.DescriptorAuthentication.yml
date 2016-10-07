@@ -1,6 +1,0 @@
-Adlogix\Confluence\Client\Entity\Connect\DescriptorAuthentication:
-  exclusion_policy: ALL
-  properties:
-    type:
-      type: string
-
