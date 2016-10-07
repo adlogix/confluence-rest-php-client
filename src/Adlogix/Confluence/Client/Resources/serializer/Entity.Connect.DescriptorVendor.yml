@@ -1,7 +1,0 @@
-Adlogix\Confluence\Client\Entity\Connect\DescriptorVendor:
-  exclusion_policy: ALL
-  properties:
-    name:
-      type: string
-    url:
-      type: string

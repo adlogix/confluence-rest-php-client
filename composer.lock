@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4101a390a81fae95346fa3b773f35267",
+    "hash": "1fb30a158838afd58b486bfb42ae3c46",
     "content-hash": "3099579b109bc5826e352d07a536305a",
     "packages": [
         {
@@ -13,22 +13,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
-                "reference": "b1bf43c0b0326e6390d1fb08deab15cc99e0eb0c"
+                "reference": "f898ed888215fe2fef4e91552f1bfcc5b64ac099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/b1bf43c0b0326e6390d1fb08deab15cc99e0eb0c",
-                "reference": "b1bf43c0b0326e6390d1fb08deab15cc99e0eb0c",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/f898ed888215fe2fef4e91552f1bfcc5b64ac099",
+                "reference": "f898ed888215fe2fef4e91552f1bfcc5b64ac099",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^3.0",
-                "php": ">=5.5.0"
+                "firebase/php-jwt": "^4.0",
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "guzzlehttp/guzzle": "^6.0",
-                "phpunit/phpunit": "^4.8",
-                "silex/silex": "^1.3"
+                "guzzlehttp/guzzle": "^6.2",
+                "phpunit/phpunit": "^5.6",
+                "silex/silex": "^2.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "For using this library as it was created for Guzzle6. But you should be able to use it with any PSR-7 HTTP Client"
@@ -68,7 +68,7 @@
                 "source": "https://github.com/adlogix/guzzle-atlassian-connect-middleware/tree/feature/Handle_Spaces_in_URI",
                 "issues": "https://github.com/adlogix/guzzle-atlassian-connect-middleware/issues"
             },
-            "time": "2016-10-07 07:50:18"
+            "time": "2016-10-07 09:18:06"
         },
         {
             "name": "doctrine/annotations",
@@ -248,16 +248,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v3.0.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1"
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
-                "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
                 "shasum": ""
             },
             "require": {
@@ -287,7 +287,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2015-07-22 18:31:08"
+            "time": "2016-07-18 04:51:16"
         },
         {
             "name": "jms/metadata",

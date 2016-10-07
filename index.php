@@ -1,7 +1,7 @@
 <?php
-use Adlogix\Confluence\Client\ClientBuilder;
-use Adlogix\Confluence\Client\Security\HeaderAuthentication;
-use Adlogix\Confluence\Client\Security\QueryParamAuthentication;
+use Adlogix\ConfluenceClient\ClientBuilder;
+use Adlogix\ConfluenceClient\Security\HeaderAuthentication;
+use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +19,7 @@ $baseUrl = '';
 if (file_exists('payload.json')) {
     $payload = json_decode(file_get_contents('payload.json'));
     $sharedSecret = $payload->sharedSecret;
-    $baseUrl = $payload->baseUrl;
+    $baseUrl = $payload->baseUrl.'/rest/api/';
 }
 
 
@@ -111,15 +111,7 @@ $app->post('/enabled', function () {
 
 //Catch all route to run our test code
 $app->match('/api/{url}', function ($url) use ($client) {
-    $client->sendRawApiRequest('GET', $url);
-})->assert('url', '.+');
-
-//Catch all route to run our test code
-$app->match('/image/{url}', function ($url) use ($client) {
-
-    $response = $client->sendRawAttachmentRequest($url);
-
-    return $response->getBody()->getContents();
+    $client->sendRawRequest('GET', $url);
 })->assert('url', '.+');
 
 $app->match('/', function (Application $app) {
