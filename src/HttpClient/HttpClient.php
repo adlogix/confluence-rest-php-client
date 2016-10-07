@@ -45,7 +45,20 @@ class HttpClient implements HttpClientInterface
      */
     public function get($uri, array $options = [])
     {
-        return $this->request('GET', $uri, null, $options);
+        return $this->apiRequest('GET', $uri, null, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function apiRequest($method, $uri, $json = null, array $options = [])
+    {
+        if (!empty($json)) {
+            $options['body'] = $json;
+            $options['headers']['content-type'] = 'application/json';
+        }
+
+        return $this->client->request($method, 'rest/api/' . $uri, $options);
     }
 
     /**
@@ -53,7 +66,7 @@ class HttpClient implements HttpClientInterface
      */
     public function post($uri, $json, array $options = [])
     {
-        return $this->request('POST', $uri, $json, $options);
+        return $this->apiRequest('POST', $uri, $json, $options);
     }
 
     /**
@@ -61,7 +74,7 @@ class HttpClient implements HttpClientInterface
      */
     public function put($uri, $json, array $options = [])
     {
-        return $this->request('PUT', $uri, $json, $options);
+        return $this->apiRequest('PUT', $uri, $json, $options);
     }
 
     /**
@@ -69,20 +82,15 @@ class HttpClient implements HttpClientInterface
      */
     public function delete($uri, array $options = [])
     {
-        return $this->request('DELETE', $uri, null, $options);
+        return $this->apiRequest('DELETE', $uri, null, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function request($method, $uri, $json = null, array $options = [])
+    public function attachmentRequest($uri)
     {
-        if (!empty($json)) {
-            $options['body'] = $json;
-            $options['headers']['content-type'] = 'application/json';
-        }
-
-        return $this->client->request($method, $uri, $options);
+        return $this->client->request('GET', $uri);
     }
 
 }

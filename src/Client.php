@@ -16,8 +16,8 @@ use Adlogix\ConfluenceClient\Exception\ExceptionWrapper;
 use Adlogix\ConfluenceClient\HttpClient\HttpClientInterface;
 use Adlogix\ConfluenceClient\Security\Authentication\AuthenticationInterface;
 use Adlogix\ConfluenceClient\Service\AuthenticationService;
-use Adlogix\ConfluenceClient\Service\DescriptorService;
 use Adlogix\ConfluenceClient\Service\ContentService;
+use Adlogix\ConfluenceClient\Service\DescriptorService;
 use Adlogix\ConfluenceClient\Service\ServiceInterface;
 use Adlogix\ConfluenceClient\Service\SpaceService;
 use GuzzleHttp\Exception\RequestException;
@@ -105,11 +105,35 @@ class Client
     }
 
 
-    public function sendRawRequest($method, $uri, $json = null, array $options = [])
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param null   $json
+     * @param array  $options
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    public function sendRawApiRequest($method, $uri, $json = null, array $options = [])
     {
         try {
-            return $this->httpClient->request($method, $uri, $json, $options);
+            return $this->httpClient->apiRequest($method, $uri, $json, $options);
 
+        } catch (RequestException $exception) {
+            throw ExceptionWrapper::wrap($exception, $this->serializer);
+        }
+    }
+
+
+    /**
+     * @param string $url
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    public function downloadAttachment($url)
+    {
+        try {
+            $url = str_replace(" ", "%20", $url);
+            return $this->httpClient->attachmentRequest($url);
         } catch (RequestException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }

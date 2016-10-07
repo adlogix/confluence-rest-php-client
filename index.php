@@ -1,9 +1,9 @@
 <?php
 use Adlogix\ConfluenceClient\ClientBuilder;
-use Adlogix\ConfluenceClient\Security\HeaderAuthentication;
 use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 require_once 'vendor/autoload.php';
 
@@ -19,15 +19,13 @@ $baseUrl = '';
 if (file_exists('payload.json')) {
     $payload = json_decode(file_get_contents('payload.json'));
     $sharedSecret = $payload->sharedSecret;
-    $baseUrl = $payload->baseUrl.'/rest/api/';
+    $baseUrl = $payload->baseUrl . '/';
 }
 
 
 $authenticationMethod = new QueryParamAuthentication('eu.adlogix.confluence-client', $sharedSecret);
 $client = ClientBuilder::create($baseUrl, $authenticationMethod)
-            ->setDebug(true)
-            ->build();
-
+    ->build();
 
 
 /**
@@ -40,7 +38,7 @@ $client = ClientBuilder::create($baseUrl, $authenticationMethod)
 $app = new Application();
 $app['debug'] = true;
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
+    'twig.path' => __DIR__ . '/views',
 ));
 
 /**
@@ -69,14 +67,14 @@ $app->get('/descriptor.json', function (Request $request) {
         'authentication' => [
             'type' => 'jwt'
         ],
-        'baseUrl'        => $scheme . '://' . $host,
-        'scopes'         => [
+        'baseUrl' => $scheme . '://' . $host,
+        'scopes' => [
             'read'
         ],
-        'key'            => 'eu.adlogix.confluence-client',
-        'lifecycle'      => [
+        'key' => 'eu.adlogix.confluence-client',
+        'lifecycle' => [
             'installed' => '/installed',
-            'enabled'   => '/enabled'
+            'enabled' => '/enabled'
         ],
     ]);
 });
@@ -94,7 +92,7 @@ $app->post('/installed', function (Request $request) {
     /**
      * Be sure to send a 200 OK response, or the app will tell you that your plugin can't be installed.
      */
-    return new \Symfony\Component\HttpFoundation\Response('OK', 200);
+    return new Response('OK', 200);
 });
 
 
@@ -106,19 +104,25 @@ $app->post('/enabled', function () {
     /**
      * Be sure to send a 200 OK response, or the app will tell you that your plugin can't be enabled.
      */
-    return new \Symfony\Component\HttpFoundation\Response('OK', 200);
+    return new Response('OK', 200);
 });
 
 //Catch all route to run our test code
 $app->match('/api/{url}', function ($url) use ($client) {
-    $client->sendRawRequest('GET', $url);
+    $response = $client->sendRawApiRequest('GET', $url);
+    $content = $response->getBody()->getContents();
+    return new Response($content, $response->getStatusCode());
+
+})->assert('url', '.+');
+
+$app->match('/image/{url}', function ($url) use ($client) {
+    $response = $client->downloadAttachment($url);
+    $content = $response->getBody()->getContents();
+    return new Response($content, $response->getStatusCode(), $response->getHeaders());
 })->assert('url', '.+');
 
 $app->match('/', function (Application $app) {
-   return $app['twig']->render("index.html.twig");
+    return $app['twig']->render("index.html.twig");
 });
 
-
 $app->run();
-
-//https://adlogixdevelopers.atlassian.net/wiki/download/attachments/197331/Import-ratecard-excel.png?version=1&modificationDate=1459859654044&api=v2

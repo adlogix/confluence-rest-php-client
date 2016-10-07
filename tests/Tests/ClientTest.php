@@ -121,9 +121,8 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function rawRequest_WithCorrectParameters_Success()
+    public function sendRawApiRequest_WithCorrectParameters_Success()
     {
-
         $serializer = $this->createMock(SerializerInterface::class);
         $httpClient = $this->createMock(HttpClientInterface::class);
         $authentication = $this->createMock(AuthenticationInterface::class);
@@ -131,19 +130,19 @@ class ClientTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $httpClient->expects($this->once())
-            ->method("request")
+            ->method("apiRequest")
             ->willReturn($response);
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
     }
 
     /**
      * @test
      *  @expectedException Adlogix\ConfluenceClient\Exception\ApiException
      */
-    public function rawRequest_CatchRequestException_Exception()
+    public function sendRawApiRequest_CatchRequestException_Exception()
     {
         $serializer = $this->createMock(SerializerInterface::class);
         $httpClient = $this->createMock(HttpClientInterface::class);
@@ -153,19 +152,19 @@ class ClientTest extends TestCase
         $exception = new RequestException("message", $request);
 
         $httpClient->expects($this->once())
-            ->method("request")
+            ->method("apiRequest")
             ->willThrowException($exception);
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
     }
 
     /**
      * @test
      * @expectedException Adlogix\ConfluenceClient\Exception\ApiException
      */
-    public function rawRequest_CatchClientException_Exception()
+    public function sendRawApiRequest_CatchClientException_Exception()
     {
         $serializer = $this->createMock(SerializerInterface::class);
         $httpClient = $this->createMock(HttpClientInterface::class);
@@ -175,12 +174,77 @@ class ClientTest extends TestCase
         $exception = new ClientException("message", $request);
 
         $httpClient->expects($this->once())
-            ->method("request")
+            ->method("apiRequest")
             ->willThrowException($exception);
 
         $client = new Client($httpClient, $serializer, $authentication);
 
-        $client->sendRawRequest('get', "some/path");
+        $client->sendRawApiRequest('get', "some/path");
+    }
+
+
+    /**
+     * @test
+     */
+    public function downloadAttachment_WithCorrectParameters_Success()
+    {
+        $serializer = $this->createMock(SerializerInterface::class);
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $authentication = $this->createMock(AuthenticationInterface::class);
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $httpClient->expects($this->once())
+            ->method("attachmentRequest")
+            ->willReturn($response);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->downloadAttachment("some/path");
+    }
+
+    /**
+     * @test
+     *  @expectedException Adlogix\ConfluenceClient\Exception\ApiException
+     */
+    public function downloadAttachment_CatchRequestException_Exception()
+    {
+        $serializer = $this->createMock(SerializerInterface::class);
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $authentication = $this->createMock(AuthenticationInterface::class);
+
+        $request = $this->createMock(RequestInterface::class);
+        $exception = new RequestException("message", $request);
+
+        $httpClient->expects($this->once())
+            ->method("attachmentRequest")
+            ->willThrowException($exception);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->downloadAttachment("some/path");
+    }
+
+    /**
+     * @test
+     * @expectedException Adlogix\ConfluenceClient\Exception\ApiException
+     */
+    public function downloadAttachment_CatchClientException_Exception()
+    {
+        $serializer = $this->createMock(SerializerInterface::class);
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $authentication = $this->createMock(AuthenticationInterface::class);
+
+        $request = $this->createMock(RequestInterface::class);
+        $exception = new ClientException("message", $request);
+
+        $httpClient->expects($this->once())
+            ->method("attachmentRequest")
+            ->willThrowException($exception);
+
+        $client = new Client($httpClient, $serializer, $authentication);
+
+        $client->downloadAttachment("some/path");
     }
 
 }

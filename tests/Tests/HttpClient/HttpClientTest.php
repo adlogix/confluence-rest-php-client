@@ -31,7 +31,7 @@ class HttpClientTest extends TestCase
         $guzzleClient = $this->createMock(ClientInterface::class);
         $guzzleClient->expects($this->once())
             ->method('request')
-            ->with('GET', $uri, $options);
+            ->with('GET', 'rest/api/'.$uri, $options);
 
         /** @var ClientInterface $guzzleClient */
         $httpClient = new HttpClient([], $guzzleClient);
@@ -53,7 +53,7 @@ class HttpClientTest extends TestCase
             ->method('request')
             ->with(
                 'POST',
-                $uri,
+                'rest/api/'.$uri,
                 array_merge($options, ['body' => $json, 'headers' => ['content-type' => 'application/json']])
             );
 
@@ -76,7 +76,7 @@ class HttpClientTest extends TestCase
             ->method('request')
             ->with(
                 'PUT',
-                $uri,
+                'rest/api/'.$uri,
                 array_merge($options, ['body' => $json, 'headers' => ['content-type' => 'application/json']])
             );
 
@@ -97,7 +97,7 @@ class HttpClientTest extends TestCase
         $guzzleClient = $this->createMock(ClientInterface::class);
         $guzzleClient->expects($this->once())
             ->method('request')
-            ->with('DELETE', $uri, $options);
+            ->with('DELETE', 'rest/api/'.$uri, $options);
 
         /** @var ClientInterface $guzzleClient */
         $httpClient = new HttpClient([], $guzzleClient);

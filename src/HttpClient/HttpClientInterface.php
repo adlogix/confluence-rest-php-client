@@ -66,5 +66,12 @@ interface HttpClientInterface
      *
      * @return Response
      */
-    public function request($method, $uri, $json = null, array $options = []);
+    public function apiRequest($method, $uri, $json = null, array $options = []);
+
+    /**
+     * @param string $uri
+     *
+     * @return Response
+     */
+    public function attachmentRequest($uri);
 }
