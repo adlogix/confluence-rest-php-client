@@ -40,16 +40,10 @@ class ContentService extends AbstractApiService
         }
 
         $all = $this->get('content', $options);
-        $contentCollection = $this->deserialize(
+        return $this->deserialize(
             $all,
             ContentCollection::class
         );
-
-        if(!$contentCollection instanceof ContentCollection){
-            return null;
-        }
-
-        return $contentCollection;
 
     }
 
@@ -62,16 +56,10 @@ class ContentService extends AbstractApiService
     public function findById($id)
     {
         $content = $this->get('content/' . $id);
-        $content = $this->deserialize(
+        return $this->deserialize(
             $content,
             Content::class
         );
-
-        if(!$content instanceof Content){
-            return null;
-        }
-
-        return $content;
     }
 
 }

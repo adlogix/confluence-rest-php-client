@@ -66,12 +66,12 @@ class ClientBuilder
      */
     private function __construct($baseUri, AuthenticationInterface $authentication)
     {
-        $this->authentication = $authentication;
 
         if (empty($baseUri)) {
             throw new \InvalidArgumentException("The baseUri cannot be empty");
         }
         $this->baseUri = $baseUri;
+        $this->authentication = $authentication;
     }
 
     /**
@@ -90,8 +90,7 @@ class ClientBuilder
                 'handler' => $stack,
                 'debug' => $this->debug
             ]),
-            $this->serializer,
-            $this->authentication
+            $this->serializer
         );
     }
 
