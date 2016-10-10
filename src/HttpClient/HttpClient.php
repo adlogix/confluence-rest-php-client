@@ -85,9 +85,9 @@ class HttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function attachmentRequest($uri)
+    public function attachmentRequest($uri, array $options = [])
     {
-        return $this->client->request('GET', $uri);
+        return $this->client->request('GET', $uri, $options);
     }
 
 }

@@ -21,12 +21,11 @@ services:
         volumes:
           - .:/var/www
         networks:
-            - adsdaq_proxy-tier
+            - proxy
         expose:
             - '4040'
         depends_on:
             - nginx
-
         environment:
             VIRTUAL_HOST: ngrok.dev
 
@@ -50,7 +49,8 @@ services:
         depends_on:
             - php
         networks:
-            - adsdaq_proxy-tier
+            - proxy
+            - backend
 
 
 
@@ -64,10 +64,10 @@ services:
         volumes_from:
             - application
         networks:
-            - adsdaq_proxy-tier
+            - backend
 
 
 networks:
     proxy:
-    adsdaq_proxy-tier:
-      external: true
+    backend:
+
