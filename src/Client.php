@@ -14,7 +14,6 @@ namespace Adlogix\ConfluenceClient;
 
 use Adlogix\ConfluenceClient\Exception\ExceptionWrapper;
 use Adlogix\ConfluenceClient\HttpClient\HttpClientInterface;
-use Adlogix\ConfluenceClient\Security\Authentication\AuthenticationInterface;
 use Adlogix\ConfluenceClient\Service\AuthenticationService;
 use Adlogix\ConfluenceClient\Service\ContentService;
 use Adlogix\ConfluenceClient\Service\DescriptorService;
@@ -30,7 +29,6 @@ use JMS\Serializer\SerializerInterface;
  *
  * @method SpaceService spaces
  * @method ContentService pages
- * @method DescriptorService descriptor
  * @method AuthenticationService authentication
  */
 class Client
@@ -47,12 +45,11 @@ class Client
     private $serializer;
 
 
-
     /**
      * Client constructor.
      *
-     * @param HttpClientInterface     $httpClient
-     * @param SerializerInterface     $serializer
+     * @param HttpClientInterface $httpClient
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         HttpClientInterface $httpClient,
@@ -62,6 +59,16 @@ class Client
         $this->serializer = $serializer;
     }
 
+    /**
+     * @param string $name
+     * @param        $args
+     *
+     * @return ServiceInterface
+     */
+    public function __call($name, $args)
+    {
+        return $this->service($name);
+    }
 
     /**
      * @param $name
@@ -81,29 +88,12 @@ class Client
                 $service = new ContentService($this->serializer, $this->httpClient);
                 break;
 
-            case 'content':
-            case 'contents':
-                $service = new ContentService($this->serializer, $this->httpClient);
-                break;
-
             default:
                 throw new \InvalidArgumentException(sprintf('Undefined service instance called: %s', $name));
         }
 
         return $service;
     }
-
-    /**
-     * @param string $name
-     * @param        $args
-     *
-     * @return ServiceInterface
-     */
-    public function __call($name, $args)
-    {
-        return $this->service($name);
-    }
-
 
     /**
      * @param string $method

@@ -151,7 +151,6 @@ class ExceptionWrapperTest extends TestCase
         return [
             ['AUTHENTICATED_FAILED', 'Could not be authenticated'],
             ['AUTHENTICATION_DENIED', 'Not allowed to login'],
-            ['AUTHORIZATION_FAILED', 'Could not be authorised'],
             ['AUTHORISATION_FAILED', 'Could not be authorised'],
             ['OUT', 'Logged out'],
             ['', 'Invalid Credentials']

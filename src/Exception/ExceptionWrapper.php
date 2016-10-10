@@ -14,6 +14,8 @@ namespace Adlogix\ConfluenceClient\Exception;
 
 use GuzzleHttp\Exception\RequestException;
 use JMS\Serializer\SerializerInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ExceptionWrapper
@@ -22,6 +24,11 @@ use JMS\Serializer\SerializerInterface;
  */
 class ExceptionWrapper
 {
+    const RESPONSE_AUTHENTICATED_FAILED = 'AUTHENTICATED_FAILED';
+    const RESPONSE_AUTHENTICATION_DENIED = 'AUTHENTICATION_DENIED';
+    const RESPONSE_AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED';
+    const RESPONSE_AUTHORISATION_FAILED = 'AUTHORISATION_FAILED';
+    const RESPONSE_OUT = 'OUT';
     /**
      * @var SerializerInterface
      */
@@ -67,40 +74,73 @@ class ExceptionWrapper
         $request = $exception->getRequest();
         $response = $exception->getResponse();
 
+        return $this->getExceptionMessage($request, $response);
+    }
+
+    /**
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     *
+     * @return string
+     */
+    private function getExceptionMessage(RequestInterface $request, ResponseInterface $response)
+    {
+        return $this->getExceptionMessageForRequest($request) ?: $this->getExceptionMessageForResponse($response);
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return null|string
+     */
+    private function getExceptionMessageForRequest(RequestInterface $request)
+    {
+        if (!$this->isRequestValid($request)) {
+            return 'Authentication Required';
+        }
+        return null;
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return bool
+     */
+    private function isRequestValid(RequestInterface $request)
+    {
         $uri = $request->getUri();
         $queryParams = \GuzzleHttp\Psr7\parse_query($uri->getQuery());
 
-        if (
-            !$request->hasHeader('Authorization')
-            && !$request->hasHeader('Authentication')
-            && !array_key_exists('jwt', $queryParams)
-            && empty($queryParams['jwt'])
-        ) {
-            return 'Authentication Required';
-        }
+        return $request->hasHeader('Authorization')
+        || $request->hasHeader('Authentication')
+        || array_key_exists('jwt', $queryParams)
+        || !empty($queryParams['jwt']);
+    }
 
+    /**
+     * @param ResponseInterface $response
+     *
+     * @return string
+     */
+    private function getExceptionMessageForResponse(ResponseInterface $response)
+    {
         switch ($response->getHeader('X-Seraph-LoginReason')) {
-            case 'AUTHENTICATED_FAILED':
-                $msg = 'Could not be authenticated';
+            case self::RESPONSE_AUTHENTICATED_FAILED:
+                return 'Could not be authenticated';
                 break;
 
-            case 'AUTHENTICATION_DENIED':
-                $msg = 'Not allowed to login';
+            case self::RESPONSE_AUTHENTICATION_DENIED:
+                return 'Not allowed to login';
                 break;
 
-            case 'AUTHORIZATION_FAILED':
-            case 'AUTHORISATION_FAILED':
-                $msg = 'Could not be authorised';
+            case self::RESPONSE_AUTHORISATION_FAILED:
+                return 'Could not be authorised';
                 break;
 
-            case 'OUT':
-                $msg = 'Logged out';
-                break;
-            default:
-                $msg = 'Invalid Credentials';
+            case self::RESPONSE_OUT:
+                return 'Logged out';
                 break;
         }
-
-        return $msg;
+        return 'Invalid Credentials';
     }
 }
