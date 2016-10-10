@@ -80,19 +80,15 @@ class Client
         switch ($name) {
             case 'space':
             case 'spaces':
-                $service = new SpaceService($this->serializer, $this->httpClient);
-                break;
+                return new SpaceService($this->serializer, $this->httpClient);
 
             case 'content':
             case 'contents':
-                $service = new ContentService($this->serializer, $this->httpClient);
-                break;
+                return new ContentService($this->serializer, $this->httpClient);
 
             default:
                 throw new \InvalidArgumentException(sprintf('Undefined service instance called: %s', $name));
         }
-
-        return $service;
     }
 
     /**
@@ -117,13 +113,15 @@ class Client
     /**
      * @param string $url
      *
+     * @param array  $options
+     *
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function downloadAttachment($url)
+    public function downloadAttachment($url, $options = [])
     {
         try {
             $url = str_replace(" ", "%20", $url);
-            return $this->httpClient->attachmentRequest($url);
+            return $this->httpClient->attachmentRequest($url, $options);
         } catch (RequestException $exception) {
             throw ExceptionWrapper::wrap($exception, $this->serializer);
         }

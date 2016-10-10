@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dfce88a7afd8f667d19fd3e3f4bb9dc0",
-    "content-hash": "acf8e21f2181cbcbcd5d00bd5b9add36",
+    "hash": "58e7b7c248b1bfb375ec08c82659f6a2",
+    "content-hash": "9989fc1211e6470d549aa40b1da7fdcc",
     "packages": [
         {
             "name": "adlogix/guzzle-atlassian-connect-middleware",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
-                "reference": "3d8ad249587a765181ac18f887698fbf47e2d282"
+                "reference": "d6c4ff3c63914427d336a845400ac25dd1667692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/3d8ad249587a765181ac18f887698fbf47e2d282",
-                "reference": "3d8ad249587a765181ac18f887698fbf47e2d282",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/d6c4ff3c63914427d336a845400ac25dd1667692",
+                "reference": "d6c4ff3c63914427d336a845400ac25dd1667692",
                 "shasum": ""
             },
             "require": {
@@ -28,7 +28,8 @@
             "require-dev": {
                 "guzzlehttp/guzzle": "^6.2",
                 "phpunit/phpunit": "^5.6",
-                "silex/silex": "^2.0"
+                "silex/silex": "^2.0",
+                "twig/twig": "^1.26"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "For using this library as it was created for Guzzle6. But you should be able to use it with any PSR-7 HTTP Client"
@@ -65,7 +66,7 @@
                 "jwt",
                 "middleware"
             ],
-            "time": "2016-10-07 13:50:57"
+            "time": "2016-10-10 15:16:50"
         },
         {
             "name": "doctrine/annotations",

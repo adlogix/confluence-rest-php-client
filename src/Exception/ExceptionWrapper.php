@@ -79,11 +79,11 @@ class ExceptionWrapper
 
     /**
      * @param RequestInterface  $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface|null $response
      *
      * @return string
      */
-    private function getExceptionMessage(RequestInterface $request, ResponseInterface $response)
+    private function getExceptionMessage(RequestInterface $request, $response = null)
     {
         return $this->getExceptionMessageForRequest($request) ?: $this->getExceptionMessageForResponse($response);
     }
@@ -118,28 +118,29 @@ class ExceptionWrapper
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param ResponseInterface|null $response
      *
      * @return string
      */
-    private function getExceptionMessageForResponse(ResponseInterface $response)
+    private function getExceptionMessageForResponse($response = null)
     {
+
+        if(null === $response){
+            return null;
+        }
+
         switch ($response->getHeader('X-Seraph-LoginReason')) {
             case self::RESPONSE_AUTHENTICATED_FAILED:
                 return 'Could not be authenticated';
-                break;
 
             case self::RESPONSE_AUTHENTICATION_DENIED:
                 return 'Not allowed to login';
-                break;
 
             case self::RESPONSE_AUTHORISATION_FAILED:
                 return 'Could not be authorised';
-                break;
 
             case self::RESPONSE_OUT:
                 return 'Logged out';
-                break;
         }
         return 'Invalid Credentials';
     }

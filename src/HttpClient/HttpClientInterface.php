@@ -80,7 +80,9 @@ interface HttpClientInterface
     /**
      * @param string $uri
      *
+     * @param array  $options
+     *
      * @return Response
      */
-    public function attachmentRequest($uri);
+    public function attachmentRequest($uri, array $options = []);
 }

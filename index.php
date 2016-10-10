@@ -1,6 +1,7 @@
 <?php
 use Adlogix\ConfluenceClient\ClientBuilder;
 use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
+use Adlogix\ConfluenceClient\Tests\Helper\Payload;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,17 +15,12 @@ require_once 'vendor/autoload.php';
  * The sharedSecret is given by the application we installed the add-on to,
  * this is needed to sign our request and to validate the requests from the application.
  */
-$sharedSecret = '';
-$baseUrl = '';
-if (file_exists('payload.json')) {
-    $payload = json_decode(file_get_contents('payload.json'));
-    $sharedSecret = $payload->sharedSecret;
-    $baseUrl = $payload->baseUrl . '/';
-}
+
+$payload = new Payload('payload.json');
 
 
-$authenticationMethod = new QueryParamAuthentication('eu.adlogix.confluence-client', $sharedSecret);
-$client = ClientBuilder::create($baseUrl, $authenticationMethod)
+$authenticationMethod = new QueryParamAuthentication('eu.adlogix.confluence-client', $payload->getSharedSecret());
+$client = ClientBuilder::create($payload->getBaseUrl(), $authenticationMethod)
     ->build();
 
 
