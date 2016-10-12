@@ -23,8 +23,10 @@ $client = ClientBuilder::create($payload->getBaseUrl(), $authenticationMethod)
 
 
 $response = $client->sendRawApiRequest('GET', 'space');
-var_dump($response->getBody()->getContents());
+echo $response->getBody()->getContents();
 
-echo "\r\n\r\n=====================================================================================================================================================================================================\r\n\r\n";
+echo "\r\n\r\n=======================================================================================================" .
+    "==============================================================================================\r\n\r\n";
+
 $response = $client->downloadAttachment('download/attachments/197288/Seller%20Admin%20logo%20stats.png?api=v2');
-var_dump($response->getBody()->getContents());
+echo $response->getBody()->getContents();
