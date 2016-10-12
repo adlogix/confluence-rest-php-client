@@ -1,7 +1,7 @@
 {
     "name": "adlogix/confluence-rest-php-client",
     "description": "Confluence API PHP Client",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "license": "MIT",
     "keywords": [
         "Atlassian",
