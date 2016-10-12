@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b2e0702019f084bc6c89ea9364f45bcf",
-    "content-hash": "60195010d182bfafb7ecb7017dbb146d",
+    "hash": "1143f3657fcc3e5bf0e59d096652f49b",
+    "content-hash": "408c4e0530845f6c5f9ac09640644477",
     "packages": [
         {
             "name": "adlogix/guzzle-atlassian-connect-middleware",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
-                "reference": "e26fa9f26c4a7609a33549f8f79eb4635c3d7da8"
+                "reference": "41c437f387069009737c2cae72e9d9c95734c11b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/e26fa9f26c4a7609a33549f8f79eb4635c3d7da8",
-                "reference": "e26fa9f26c4a7609a33549f8f79eb4635c3d7da8",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/41c437f387069009737c2cae72e9d9c95734c11b",
+                "reference": "41c437f387069009737c2cae72e9d9c95734c11b",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "jwt",
                 "middleware"
             ],
-            "time": "2016-10-12 13:45:42"
+            "time": "2016-10-12 14:18:02"
         },
         {
             "name": "doctrine/annotations",
