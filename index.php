@@ -2,6 +2,7 @@
 use Adlogix\ConfluenceClient\ClientBuilder;
 use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
 use Adlogix\ConfluenceClient\Tests\Helper\Payload;
+use Entity\Descriptor;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +18,10 @@ require_once 'vendor/autoload.php';
  */
 
 $payload = new Payload('payload.json');
+$applicationKey = 'eu.adlogix.confluence-client';
 
 
-$authenticationMethod = new QueryParamAuthentication('eu.adlogix.confluence-client', $payload->getSharedSecret());
+$authenticationMethod = new QueryParamAuthentication($applicationKey, $payload->getSharedSecret());
 $client = ClientBuilder::create($payload->getBaseUrl(), $authenticationMethod)
     ->build();
 
@@ -45,7 +47,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
  * You can validate your descriptor
  * @see https://atlassian-connect-validator.herokuapp.com/validate
  */
-$app->get('/descriptor.json', function (Request $request) {
+$app->get('/descriptor.json', function (Request $request) use ($applicationKey) {
 
     /*
      * We have to construct the correct URL in order to confluence be able to contact us
@@ -58,21 +60,15 @@ $app->get('/descriptor.json', function (Request $request) {
         $scheme = 'https';
     }
 
+    $descriptor = new Descriptor( $scheme . '://' . $host, $applicationKey);
 
-    return json_encode([
-        'authentication' => [
-            'type' => 'jwt'
-        ],
-        'baseUrl' => $scheme . '://' . $host,
-        'scopes' => [
-            'read'
-        ],
-        'key' => 'eu.adlogix.confluence-client',
-        'lifecycle' => [
-            'installed' => '/installed',
-            'enabled' => '/enabled'
-        ],
-    ]);
+    $descriptor->addScope(Descriptor::SCOPE_READ)
+        ->setLifecycleWebhooks(
+            '/installed',
+            '/enabled'
+        );
+
+    return $descriptor->getJson();
 });
 
 /**

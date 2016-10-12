@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "adlogix/guzzle-atlassian-connect-middleware",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adlogix/guzzle-atlassian-connect-middleware.git",
-                "reference": "d6c4ff3c63914427d336a845400ac25dd1667692"
+                "reference": "7a55c4c7ad9e48bfe70269257fa192ef25dc5eb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/d6c4ff3c63914427d336a845400ac25dd1667692",
-                "reference": "d6c4ff3c63914427d336a845400ac25dd1667692",
+                "url": "https://api.github.com/repos/adlogix/guzzle-atlassian-connect-middleware/zipball/7a55c4c7ad9e48bfe70269257fa192ef25dc5eb8",
+                "reference": "7a55c4c7ad9e48bfe70269257fa192ef25dc5eb8",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "jwt",
                 "middleware"
             ],
-            "time": "2016-10-10 15:16:50"
+            "time": "2016-10-12 09:01:06"
         },
         {
             "name": "doctrine/annotations",
