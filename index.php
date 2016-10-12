@@ -1,8 +1,8 @@
 <?php
 use Adlogix\ConfluenceClient\ClientBuilder;
+use Adlogix\ConfluenceClient\Entity\Descriptor;
 use Adlogix\ConfluenceClient\Security\QueryParamAuthentication;
 use Adlogix\ConfluenceClient\Tests\Helper\Payload;
-use Entity\Descriptor;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +60,7 @@ $app->get('/descriptor.json', function (Request $request) use ($applicationKey) 
         $scheme = 'https';
     }
 
-    $descriptor = new Descriptor( $scheme . '://' . $host, $applicationKey);
+    $descriptor = new Descriptor($scheme . '://' . $host, $applicationKey);
 
     $descriptor->addScope(Descriptor::SCOPE_READ)
         ->setLifecycleWebhooks(

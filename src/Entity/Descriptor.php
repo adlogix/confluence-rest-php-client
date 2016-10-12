@@ -10,7 +10,7 @@
  */
 
 
-namespace Entity;
+namespace Adlogix\ConfluenceClient\Entity;
 
 use Adlogix\GuzzleAtlassianConnect\Entity\Descriptor as BaseDescriptor;
 
