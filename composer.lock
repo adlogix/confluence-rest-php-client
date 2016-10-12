@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1143f3657fcc3e5bf0e59d096652f49b",
-    "content-hash": "408c4e0530845f6c5f9ac09640644477",
+    "hash": "b47d3a83d5dab482ea635478b3bc7eba",
+    "content-hash": "c65d68f7d1ecae8dc07c5833b5315818",
     "packages": [
         {
             "name": "adlogix/guzzle-atlassian-connect-middleware",
